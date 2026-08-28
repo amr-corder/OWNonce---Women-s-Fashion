@@ -1,0 +1,126 @@
+{
+  "entities": {
+    "Order": {
+      "title": "Order",
+      "description": "Customer orders placed in the store",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "orderNumber": { "type": "string" },
+        "createdAt": { "type": "number" },
+        "customerName": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "governorate": { "type": "string" },
+        "destinationZone": { "type": "string" },
+        "city": { "type": "string" },
+        "address": { "type": "string" },
+        "notes": { "type": "string" },
+        "items": { "type": "array" },
+        "subtotal": { "type": "number" },
+        "totalWeight": { "type": "number" },
+        "originZone": { "type": "string" },
+        "shippingCost": { "type": "number" },
+        "total": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "paymentStatus": { "type": "string" },
+        "orderStatus": { "type": "string" },
+        "paymentProofUrl": { "type": "string" },
+        "paymentProofName": { "type": "string" }
+      },
+      "required": ["id", "orderNumber", "createdAt", "customerName", "customerPhone", "items", "total", "orderStatus", "paymentStatus"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Products available in the store",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "originalPrice": { "type": "number" },
+        "category": { "type": "string" },
+        "images": { "type": "array" },
+        "sizes": { "type": "array" },
+        "colors": { "type": "array" },
+        "stock": { "type": "number" },
+        "isAvailable": { "type": "boolean" },
+        "weight": { "type": "number" },
+        "featured": { "type": "boolean" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["id", "name", "price", "category", "images", "sizes", "colors", "stock", "isAvailable", "weight"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Product categories",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "slug": { "type": "string" },
+        "description": { "type": "string" },
+        "image": { "type": "string" }
+      },
+      "required": ["id", "name", "slug"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Customer product reviews",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "productId": { "type": "string" },
+        "orderId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "rating": { "type": "number" },
+        "comment": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "createdAt": { "type": "number" },
+        "isApproved": { "type": "boolean" }
+      },
+      "required": ["id", "productId", "customerName", "rating", "comment", "createdAt", "isApproved"]
+    },
+    "StoreSettings": {
+      "title": "StoreSettings",
+      "description": "Store configuration and contact settings",
+      "type": "object",
+      "properties": {
+        "storeName": { "type": "string" },
+        "tagline": { "type": "string" },
+        "phone": { "type": "string" },
+        "whatsapp": { "type": "string" },
+        "email": { "type": "string" },
+        "address": { "type": "string" },
+        "vodafoneCashNumber": { "type": "string" },
+        "instapayAccount": { "type": "string" },
+        "instapayName": { "type": "string" },
+        "instagram": { "type": "string" },
+        "facebook": { "type": "string" },
+        "tiktok": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Customer orders in real time"
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Products catalog"
+    },
+    "/categories/{categoryId}": {
+      "schema": "Category",
+      "description": "Categories catalog"
+    },
+    "/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Product customer reviews"
+    },
+    "/settings/{settingId}": {
+      "schema": "StoreSettings",
+      "description": "Store settings and shipping rates"
+    }
+  }
+}

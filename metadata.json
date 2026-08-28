@@ -1,0 +1,8 @@
+{
+  "name": "OWNonce - Women's Fashion",
+  "description": "Premium, minimal, and elegant women's fashion e-commerce store featuring basic round neck, v-neck tops, and automatic weight-based Egypt shipping calculator.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

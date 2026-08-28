@@ -1,0 +1,183 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Hanken Grotesk", system-ui, -apple-system, sans-serif;
+  --font-arabic: "Tajawal", system-ui, sans-serif;
+
+  --color-brand-bg: #f5e6d3;
+  --color-brand-surface: #fffdf9;
+  --color-brand-text: #4a382d;
+  --color-brand-primary: #77553b;
+  --color-brand-accent: #a98265;
+  --color-brand-action: #b89578;
+  --color-brand-gold: #b39257;
+  --color-brand-muted: #82756c;
+  --color-brand-border: #d4c3b9;
+  --color-brand-container: #ffeadf;
+}
+
+@layer base {
+  :root {
+    --bg-main: #f5e6d3;
+    --bg-surface: #fffdf9;
+    --bg-subtle: #faf7f2;
+    --bg-elevated: #ffffff;
+    --text-main: #4a382d;
+    --text-title: #27180f;
+    --text-muted: #82756c;
+    --border-color: #d4c3b9;
+    --header-bg: #a98265;
+    --header-text: #fffdf9;
+    --footer-bg: #27180f;
+  }
+
+  .dark {
+    --bg-main: #140f0c;
+    --bg-surface: #1d1612;
+    --bg-subtle: #241c17;
+    --bg-elevated: #2b221c;
+    --text-main: #f0e6dc;
+    --text-title: #fffdf9;
+    --text-muted: #ad9e92;
+    --border-color: #3d3027;
+    --header-bg: #1a130e;
+    --header-text: #f5efe6;
+    --footer-bg: #0d0a08;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  h1, h2, h3, h4, .font-editorial {
+    font-family: var(--font-serif);
+  }
+}
+
+/* Dark mode utility classes */
+.dark #ownonce-app-root {
+  background-color: #140f0c;
+  color: #f0e6dc;
+}
+
+.dark header#ownonce-header {
+  background-color: #1d1612;
+  border-bottom: 1px solid #3d3027;
+}
+
+.dark footer#ownonce-footer {
+  background-color: #0d0a08;
+  border-top: 1px solid #2b221c;
+}
+
+/* Dark mode card and inputs */
+.dark .bg-\[\#FFFDF9\] {
+  background-color: #1d1612 !important;
+}
+
+.dark .bg-\[\#FAF7F2\] {
+  background-color: #241c17 !important;
+}
+
+.dark .bg-\[\#F5E6D3\] {
+  background-color: #18120e !important;
+}
+
+.dark .text-\[\#4A382D\] {
+  color: #f0e6dc !important;
+}
+
+.dark .text-\[\#27180F\],
+.dark .text-\[\#1E1610\] {
+  color: #fffdf9 !important;
+}
+
+.dark .text-\[\#82756C\],
+.dark .text-\[\#82756c\] {
+  color: #ad9e92 !important;
+}
+
+.dark .border-\[\#d4c3b9\],
+.dark .border-\[\#d4c3b9\]\/50,
+.dark .border-\[\#d4c3b9\]\/40,
+.dark .border-\[\#E6DCCF\] {
+  border-color: #3d3027 !important;
+}
+
+.dark .border-\[\#FFFDF9\]\/20 {
+  border-color: rgba(255, 253, 249, 0.1) !important;
+}
+
+.dark input,
+.dark select,
+.dark textarea {
+  background-color: #241c17 !important;
+  color: #f0e6dc !important;
+  border-color: #3d3027 !important;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #82756c !important;
+}
+
+.whisper-shadow {
+  box-shadow: 0 8px 32px rgba(74, 56, 45, 0.06), 0 2px 8px rgba(74, 56, 45, 0.03);
+}
+
+.dark .whisper-shadow {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.luxury-card-shadow {
+  box-shadow: 0 12px 40px rgba(74, 56, 45, 0.07);
+}
+
+.dark .luxury-card-shadow {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+}
+
+.shimmer-line {
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(184, 149, 120, 0.6), transparent);
+  animation: shimmer 2.2s infinite ease-in-out;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.pulse-slow {
+  animation: pulseSlowAnimation 4s infinite ease-in-out;
+}
+
+@keyframes pulseSlowAnimation {
+  0% { opacity: 0.85; transform: scale(0.99); }
+  50% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0.85; transform: scale(0.99); }
+}
+
+/* Custom scrollbar for luxury feel */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-action);
+}
+
