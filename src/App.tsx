@@ -58,11 +58,12 @@ function ScrollReveal() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
+          } else {
+            entry.target.classList.remove('is-visible');
           }
         });
       },
-      { threshold: 0.12, rootMargin: '0px 0px -48px' },
+      { threshold: 0.08, rootMargin: '0px 0px -32px' },
     );
     const scan = () => document.querySelectorAll(revealSelector).forEach(reveal);
     const mutationObserver = new MutationObserver(scan);
