@@ -3,7 +3,6 @@ import { Product, Category, StoreSettings, Review } from '../types';
 export const DEFAULT_COLORS = [
   { name: 'Black', hex: '#000000' },
   { name: 'White', hex: '#FFFFFF' },
-  { name: 'Red', hex: '#D00000' },
   { name: 'Beige', hex: '#D9C2A6' },
   { name: 'Olive', hex: '#808000' },
   { name: 'Burgundy', hex: '#800020' },

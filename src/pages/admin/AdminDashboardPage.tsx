@@ -35,9 +35,13 @@ import {
   StoreSettings,
 } from '../../types';
 import { ALL_GOVERNORATES, ZONES } from '../../data/shippingRates';
-import { DEFAULT_COLORS } from '../../data/initialProducts';
 import { PaymentProofModal } from '../../components/admin/PaymentProofModal';
 import { ProductImageUploader } from '../../components/admin/ProductImageUploader';
+import {
+  ADMIN_DEFAULT_COLORS,
+  ADMIN_DEFAULT_SIZES,
+  ProductOptionsSelector,
+} from '../../components/admin/ProductOptionsSelector';
 import { Order } from '../../types';
 import { printOrderSummary } from '../../utils/printHelper';
 import {
@@ -114,8 +118,8 @@ export const AdminDashboardPage: React.FC = () => {
   const [customCategoryInput, setCustomCategoryInput] = useState('');
   const [prodStock, setProdStock] = useState(50);
   const [prodImages, setProdImages] = useState<string[]>([]);
-  const [prodColors, setProdColors] = useState<ProductColor[]>(DEFAULT_COLORS);
-  const [prodSizes, setProdSizes] = useState<string[]>(['S', 'M', 'L', 'XL']);
+  const [prodColors, setProdColors] = useState<ProductColor[]>(ADMIN_DEFAULT_COLORS);
+  const [prodSizes, setProdSizes] = useState<string[]>(ADMIN_DEFAULT_SIZES);
   const [prodAvailable, setProdAvailable] = useState(true);
 
   // Shipping Configuration State
@@ -203,8 +207,8 @@ export const AdminDashboardPage: React.FC = () => {
     setCustomCategoryInput('');
     setProdStock(40);
     setProdImages([]);
-    setProdColors(DEFAULT_COLORS);
-    setProdSizes(['S', 'M', 'L', 'XL']);
+    setProdColors(ADMIN_DEFAULT_COLORS);
+    setProdSizes(ADMIN_DEFAULT_SIZES);
     setProdAvailable(true);
     setIsProductModalOpen(true);
   };
@@ -1665,6 +1669,13 @@ export const AdminDashboardPage: React.FC = () => {
                   />
                 </div>
               </div>
+
+              <ProductOptionsSelector
+                colors={prodColors}
+                sizes={prodSizes}
+                onColorsChange={setProdColors}
+                onSizesChange={setProdSizes}
+              />
 
               {/* Direct Image File Uploader */}
               <ProductImageUploader
