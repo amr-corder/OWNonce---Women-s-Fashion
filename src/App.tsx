@@ -44,7 +44,16 @@ function ScrollToTop() {
 
 function ScrollReveal() {
   useEffect(() => {
-    const revealSelector = 'main > *, main section, main article, main form, main [id^="product-card-"]';
+    const revealSelector = [
+      'main > *',
+      'main section',
+      'main article',
+      'main form',
+      'main section > div:not(.absolute):not(.fixed)',
+      'main section > article',
+      'main section > form',
+      'main [id^="product-card-"]',
+    ].join(', ');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const reveal = (element: Element) => {
       if (element instanceof HTMLElement && !element.classList.contains('scroll-reveal')) {
