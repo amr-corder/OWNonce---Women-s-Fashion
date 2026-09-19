@@ -34,6 +34,7 @@ export interface Category {
   slug: string;
   description?: string;
   image?: string;
+  types?: string[];
 }
 
 export interface CartItem {

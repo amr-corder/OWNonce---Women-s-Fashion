@@ -132,12 +132,16 @@ export const AdminDashboardPage: React.FC = () => {
   const [categoryName, setCategoryName] = useState('');
   const [categoryDescription, setCategoryDescription] = useState('');
   const [categoryImage, setCategoryImage] = useState<string[]>([]);
+  const [categoryTypes, setCategoryTypes] = useState<string[]>([]);
+  const [newCategoryType, setNewCategoryType] = useState('');
 
   const resetCategoryForm = () => {
     setEditingCategoryId(null);
     setCategoryName('');
     setCategoryDescription('');
     setCategoryImage([]);
+    setCategoryTypes([]);
+    setNewCategoryType('');
   };
 
   const handleEditCategory = (category: Category) => {
@@ -145,6 +149,8 @@ export const AdminDashboardPage: React.FC = () => {
     setCategoryName(category.name);
     setCategoryDescription(category.description || '');
     setCategoryImage(category.image ? [category.image] : []);
+    setCategoryTypes(category.types || []);
+    setNewCategoryType('');
   };
 
   const handleSaveCategory = (event: React.FormEvent) => {
@@ -156,6 +162,7 @@ export const AdminDashboardPage: React.FC = () => {
       slug: name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
       description: categoryDescription.trim(),
       image: categoryImage[0] || '',
+      types: categoryTypes.filter((type) => type.trim()),
     };
 
     if (editingCategoryId) {
@@ -1337,6 +1344,60 @@ export const AdminDashboardPage: React.FC = () => {
 
               <ProductImageUploader images={categoryImage} onChange={setCategoryImage} />
 
+              <div>
+                <label className="font-semibold block mb-1 text-xs">Category Types</label>
+                <div className="flex gap-2">
+                  <input
+                    value={newCategoryType}
+                    onChange={(event) => setNewCategoryType(event.target.value)}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter') {
+                        event.preventDefault();
+                        const type = newCategoryType.trim();
+                        if (type && !categoryTypes.includes(type)) {
+                          setCategoryTypes((current) => [...current, type]);
+                          setNewCategoryType('');
+                        }
+                      }
+                    }}
+                    placeholder="e.g. Short Sleeve"
+                    className="flex-1 p-2.5 bg-[#F5E6D3]/30 border border-[#d4c3b9] rounded text-xs"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const type = newCategoryType.trim();
+                      if (type && !categoryTypes.includes(type)) {
+                        setCategoryTypes((current) => [...current, type]);
+                        setNewCategoryType('');
+                      }
+                    }}
+                    className="px-3 bg-[#77553b] hover:bg-[#5C3F2B] text-[#FFFDF9] rounded cursor-pointer"
+                    title="Add category type"
+                    aria-label="Add category type"
+                  >
+                    <Plus className="w-4 h-4" />
+                  </button>
+                </div>
+                {categoryTypes.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {categoryTypes.map((type) => (
+                      <span key={type} className="inline-flex items-center gap-1 px-2.5 py-1 bg-[#F5E6D3] border border-[#d4c3b9] rounded text-[11px]">
+                        {type}
+                        <button
+                          type="button"
+                          onClick={() => setCategoryTypes((current) => current.filter((item) => item !== type))}
+                          className="text-[#77553b] hover:text-red-600 cursor-pointer"
+                          aria-label={`Remove ${type}`}
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+
               <button
                 type="submit"
                 className="w-full px-4 py-3 bg-[#B89578] hover:bg-[#96745A] text-[#FFFDF9] text-xs uppercase tracking-wider font-semibold rounded transition-colors cursor-pointer"
@@ -1362,6 +1423,9 @@ export const AdminDashboardPage: React.FC = () => {
                   <div className="min-w-0 flex-1">
                     <h3 className="font-semibold text-sm truncate">{category.name}</h3>
                     <p className="text-[11px] text-[#82756c] line-clamp-2">{category.description || 'No description'}</p>
+                    {category.types && category.types.length > 0 && (
+                      <p className="text-[10px] text-[#77553b] mt-1 truncate">Types: {category.types.join(', ')}</p>
+                    )}
                   </div>
                   <button type="button" onClick={() => handleEditCategory(category)} className="p-2 text-[#77553b] hover:bg-[#F5E6D3] rounded cursor-pointer" title="Edit category">
                     <Edit2 className="w-4 h-4" />
