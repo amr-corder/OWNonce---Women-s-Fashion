@@ -18,6 +18,7 @@ import { GlobalLoader } from './components/GlobalLoader';
 // Customer Pages
 import { HomePage } from './pages/HomePage';
 import { ProductsPage } from './pages/ProductsPage';
+import { CategoriesPage } from './pages/CategoriesPage';
 import { ProductDetailsPage } from './pages/ProductDetailsPage';
 import { WishlistPage } from './pages/WishlistPage';
 import { CartPage } from './pages/CartPage';
@@ -110,6 +111,7 @@ function AppLayout() {
           {/* Customer Routes */}
           <Route path="/" element={<HomePage />} />
           <Route path="/products" element={<ProductsPage />} />
+          <Route path="/categories" element={<CategoriesPage />} />
           <Route path="/products/:id" element={<ProductDetailsPage />} />
           <Route path="/wishlist" element={<WishlistPage />} />
           <Route path="/cart" element={<CartPage />} />

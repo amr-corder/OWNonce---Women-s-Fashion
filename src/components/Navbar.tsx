@@ -102,12 +102,15 @@ export const Navbar: React.FC = () => {
                 onMouseEnter={() => setCategoriesDropdown(true)}
                 onMouseLeave={() => setCategoriesDropdown(false)}
               >
-                <button
-                  className="inline-flex items-center gap-1 opacity-90 hover:opacity-100 transition-opacity cursor-pointer uppercase tracking-[0.2em]"
+                <Link
+                  to="/categories"
+                  className={`inline-flex items-center gap-1 opacity-90 hover:opacity-100 transition-opacity uppercase tracking-[0.2em] ${
+                    isActive('/categories') ? 'border-b border-brand-surface pb-0.5 opacity-100' : ''
+                  }`}
                 >
                   <span>{navLabels.categories}</span>
                   <ChevronDown className="w-3 h-3 transition-transform duration-200 group-hover:rotate-180" />
-                </button>
+                </Link>
 
                 <AnimatePresence>
                   {categoriesDropdown && (
@@ -366,6 +369,13 @@ export const Navbar: React.FC = () => {
                 className="block text-xs uppercase tracking-[0.25em] font-sans font-medium text-brand-surface py-1 hover:opacity-75"
               >
                 {navLabels.allProducts}
+              </Link>
+              <Link
+                to="/categories"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block text-xs uppercase tracking-[0.25em] font-sans font-medium text-brand-surface py-1 hover:opacity-75"
+              >
+                {navLabels.categories}
               </Link>
 
               <div className="pt-2 pb-1 border-t border-b border-brand-surface/15 dark:border-[#3D3027]">
