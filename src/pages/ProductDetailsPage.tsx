@@ -158,7 +158,9 @@ export const ProductDetailsPage: React.FC = () => {
                 {selectedColor && selectedColor.hex.toLowerCase() !== '#ffffff' && (
                   <span
                     aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 opacity-50 mix-blend-multiply transition-colors duration-300"
+                    className={`pointer-events-none absolute inset-0 mix-blend-multiply transition-colors duration-300 ${
+                      selectedColor.hex.toLowerCase() === '#000000' ? 'opacity-10' : 'opacity-25'
+                    }`}
                     style={{ backgroundColor: selectedColor.hex }}
                   />
                 )}
