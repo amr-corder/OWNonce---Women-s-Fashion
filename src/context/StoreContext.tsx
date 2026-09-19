@@ -689,6 +689,26 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       console.error('Failed to sync order to cloud Firestore:', err);
     }
 
+    // Reserve the ordered quantities so the product card closes when stock reaches zero.
+    const orderedQuantities = newOrder.items.reduce<Record<string, number>>((totals, item) => {
+      totals[item.productId] = (totals[item.productId] || 0) + item.quantity;
+      return totals;
+    }, {});
+
+    setProducts((prev) =>
+      prev.map((product) => {
+        const orderedQuantity = orderedQuantities[product.id];
+        if (!orderedQuantity) return product;
+
+        const nextStock = Math.max(0, product.stock - orderedQuantity);
+        updateDoc(doc(db, 'products', product.id), { stock: nextStock }).catch((err) => {
+          console.error(`Failed to update stock for product ${product.id}:`, err);
+        });
+
+        return { ...product, stock: nextStock };
+      })
+    );
+
     // Also update local state for immediate feedback
     setOrders((prev) => [newOrder, ...prev.filter((o) => o.id !== newOrder.id)]);
     clearCart();
