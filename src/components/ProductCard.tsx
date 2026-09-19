@@ -16,6 +16,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const navigate = useNavigate();
 
   const isFavorited = isInWishlist(product.id);
+  const isInStock = product.isAvailable && product.stock > 0;
 
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -32,7 +33,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <div
       id={`product-card-${product.id}`}
-      className="group relative min-w-0 bg-[#FFFDF9] dark:bg-[#1E1712] rounded-lg border border-[#d4c3b9]/50 dark:border-[#3D2C22] overflow-hidden shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+      className={`group relative min-w-0 bg-[#FFFDF9] dark:bg-[#1E1712] rounded-lg border border-[#d4c3b9]/50 dark:border-[#3D2C22] overflow-hidden shadow-xs transition-all duration-300 flex flex-col justify-between ${
+        isInStock ? 'hover:shadow-md' : 'opacity-60 grayscale'
+      }`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -80,7 +83,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
 
         {/* Out of Stock Banner */}
-        {!product.isAvailable && (
+        {!isInStock && (
           <div className="absolute inset-0 bg-[#27180F]/50 flex items-center justify-center">
             <span className="bg-[#FFFDF9] dark:bg-[#281E18] text-[#4A382D] dark:text-[#FAF6F0] text-xs font-semibold px-3 py-1.5 rounded uppercase tracking-wider shadow-sm">
               Out of Stock
@@ -160,7 +163,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div className="pt-2 border-t border-[#d4c3b9]/40 dark:border-[#3D2C22] flex gap-1.5 sm:gap-2">
           <button
             onClick={handleQuickAdd}
-            disabled={!product.isAvailable || product.stock <= 0}
+            disabled={!isInStock}
             className="flex-1 min-w-0 py-2 px-1.5 sm:px-3 bg-[#B89578] hover:bg-[#96745A] text-[#FFFDF9] text-[10px] sm:text-xs font-sans font-semibold tracking-wide sm:tracking-wider uppercase rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-1 cursor-pointer"
           >
             <ShoppingBag className="w-3.5 h-3.5" />
