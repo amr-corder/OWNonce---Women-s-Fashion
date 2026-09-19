@@ -42,6 +42,43 @@ function ScrollToTop() {
   return null;
 }
 
+function ScrollReveal() {
+  useEffect(() => {
+    const revealSelector = 'main > *, main section, main article, main form, main [id^="product-card-"]';
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reveal = (element: Element) => {
+      if (element instanceof HTMLElement && !element.classList.contains('scroll-reveal')) {
+        element.classList.add('scroll-reveal');
+        if (reducedMotion) element.classList.add('is-visible');
+        observer.observe(element);
+      }
+    };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -48px' },
+    );
+    const scan = () => document.querySelectorAll(revealSelector).forEach(reveal);
+    const mutationObserver = new MutationObserver(scan);
+
+    scan();
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      mutationObserver.disconnect();
+      observer.disconnect();
+    };
+  }, []);
+
+  return null;
+}
+
 // Layout wrapper that conditionally renders customer Navbar & Footer
 function AppLayout() {
   const location = useLocation();
@@ -50,6 +87,7 @@ function AppLayout() {
   return (
     <div id="ownonce-app-root" className="min-h-screen bg-[#F5E6D3] dark:bg-[#140F0C] text-[#4A382D] dark:text-[#F0E6DC] flex flex-col font-sans selection:bg-[#B89578] selection:text-[#FFFDF9] transition-colors duration-300">
       <ScrollToTop />
+      <ScrollReveal />
       <GlobalLoader />
       <AddToCartToast />
 
