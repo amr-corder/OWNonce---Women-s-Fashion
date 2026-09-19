@@ -1430,7 +1430,17 @@ export const AdminDashboardPage: React.FC = () => {
                   <button type="button" onClick={() => handleEditCategory(category)} className="p-2 text-[#77553b] hover:bg-[#F5E6D3] rounded cursor-pointer" title="Edit category">
                     <Edit2 className="w-4 h-4" />
                   </button>
-                  <button type="button" onClick={() => deleteCategory(category.id)} className="p-2 text-red-600 hover:bg-red-50 rounded cursor-pointer" title="Delete category">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (window.confirm(`Delete category "${category.name}"? Products in this category will not be deleted.`)) {
+                        deleteCategory(category.id);
+                      }
+                    }}
+                    className="p-2 text-red-600 hover:bg-red-50 rounded cursor-pointer"
+                    title="Delete category"
+                    aria-label={`Delete ${category.name}`}
+                  >
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
