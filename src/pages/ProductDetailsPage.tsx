@@ -155,6 +155,13 @@ export const ProductDetailsPage: React.FC = () => {
                   alt={product.name}
                   className="w-full h-full object-cover"
                 />
+                {selectedColor && selectedColor.hex.toLowerCase() !== '#ffffff' && (
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 opacity-50 mix-blend-multiply transition-colors duration-300"
+                    style={{ backgroundColor: selectedColor.hex }}
+                  />
+                )}
 
                 {/* Weight Tag Badge */}
                 <div className="absolute top-4 left-4 px-3 py-1 bg-[#27180F]/75 text-[#FFFDF9] text-xs font-sans rounded-md tracking-wider backdrop-blur-xs">
@@ -363,7 +370,7 @@ export const ProductDetailsPage: React.FC = () => {
                 </div>
                 <div className="p-2 bg-[#F5E6D3]/40 rounded">
                   <ShieldCheck className="w-4 h-4 mx-auto mb-1 text-[#77553b]" />
-                  <span>100% Combed Cotton</span>
+                  <span>94% Cotton / 6% Lycra</span>
                 </div>
                 <div className="p-2 bg-[#F5E6D3]/40 rounded">
                   <RotateCcw className="w-4 h-4 mx-auto mb-1 text-[#77553b]" />

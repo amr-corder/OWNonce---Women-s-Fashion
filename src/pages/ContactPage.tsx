@@ -11,14 +11,44 @@ import {
 } from 'lucide-react';
 import { TikTokIcon } from '../components/TikTokIcon';
 import { useStore } from '../context/StoreContext';
+import { useLanguage } from '../context/LanguageContext';
 
 export const ContactPage: React.FC = () => {
   const { settings } = useStore();
+  const { isArabic } = useLanguage();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('Product / Sizing Question');
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
+
+  const t = {
+    pageTag: isArabic ? 'مستشار المشتريات' : 'Atelier Concierge',
+    title: isArabic ? 'تواصل معنا' : 'Get in Touch',
+    description: isArabic ? 'هل لديك سؤال عن المقاس، الشحن، أو الهدايا المؤسسية؟ فريقنا جاهز لخدمتك.' : 'Have a question about fabric fit, order dispatch, or corporate gifts? Our team is at your disposal.',
+    directChannels: isArabic ? 'القنوات المباشرة' : 'Direct Channels',
+    whatsapp: isArabic ? 'استشارة واتساب' : 'WhatsApp Concierge',
+    phone: isArabic ? 'خط فودافون كاش والهاتف' : 'Vodafone Cash Line & Phone',
+    service: isArabic ? 'خدمة العملاء' : 'Customer Service',
+    location: isArabic ? 'موقع الأتلييه' : 'Atelier Location',
+    follow: isArabic ? 'تابع رحلتنا' : 'Follow Our Journey',
+    inquiry: isArabic ? 'أرسل استفسارك' : 'Send an Inquiry',
+    submittedTitle: isArabic ? 'تم إرسال الرسالة' : 'Message Dispatched',
+    submittedText: isArabic ? 'شكرًا لك، {name}. سيقوم فريق خدمة العملاء بالقاهرة بالرد على استفسارك قريبًا.' : 'Thank you, {name}. Our client experience team in Cairo will respond to your inquiry shortly.',
+    fullName: isArabic ? 'الاسم الكامل *' : 'Full Name *',
+    emailLabel: isArabic ? 'البريد الإلكتروني *' : 'Email Address *',
+    topic: isArabic ? 'الموضوع / نوع الاستفسار' : 'Topic / Inquiry Type',
+    productQuestion: isArabic ? 'منتج / نصيحة المقاس' : 'Product / Sizing Advice',
+    orderTracking: isArabic ? 'تتبع الطلب / الشحن' : 'Order Tracking / Delivery',
+    payment: isArabic ? 'تأكيد تحويل الدفع' : 'Payment Transfer Confirmation',
+    wholesale: isArabic ? 'جملة / تعاونات' : 'Wholesale / Atelier Collaboration',
+    messageLabel: isArabic ? 'الرسالة *' : 'Message *',
+    placeholderName: isArabic ? 'اسمك' : 'Your name',
+    placeholderEmail: isArabic ? 'your.email@domain.com' : 'your.email@domain.com',
+    placeholderMessage: isArabic ? 'كيف يمكن لفريق الأتلييه مساعدتك؟' : 'How can our atelier specialists assist you?',
+    send: isArabic ? 'إرسال' : 'Send',
+    sendMessage: isArabic ? 'إرسال الرسالة' : 'Send Message',
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,11 +68,11 @@ export const ContactPage: React.FC = () => {
         {/* Page Header */}
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <span className="text-[10px] uppercase font-sans tracking-[0.3em] text-[#77553b] font-semibold block">
-            Atelier Concierge
+            {t.pageTag}
           </span>
-          <h1 className="text-3xl sm:text-4xl font-serif text-[#4A382D]">Get in Touch</h1>
+          <h1 className="text-3xl sm:text-4xl font-serif text-[#4A382D]">{t.title}</h1>
           <p className="text-xs sm:text-sm text-[#82756c]">
-            Have a question about fabric fit, order dispatch, or corporate gifts? Our team is at your disposal.
+            {t.description}
           </p>
         </div>
 
@@ -51,7 +81,7 @@ export const ContactPage: React.FC = () => {
           <div className="lg:col-span-5 space-y-6">
             <div className="bg-[#FFFDF9] rounded-xl border border-[#d4c3b9] p-6 sm:p-8 shadow-xs space-y-6">
               <h2 className="text-lg font-serif text-[#4A382D] border-b border-[#d4c3b9] pb-3">
-                Direct Channels
+                {t.directChannels}
               </h2>
 
               <div className="space-y-4 text-xs">
@@ -66,7 +96,7 @@ export const ContactPage: React.FC = () => {
                     <MessageCircle className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="font-semibold text-[#4A382D] block">WhatsApp Concierge</span>
+                    <span className="font-semibold text-[#4A382D] block">{t.whatsapp}</span>
                     <span className="text-[#82756c]">{settings.whatsapp}</span>
                   </div>
                 </a>
@@ -78,7 +108,7 @@ export const ContactPage: React.FC = () => {
                   </div>
                   <div>
                     <span className="font-semibold text-[#4A382D] block">
-                      Vodafone Cash Line & Phone
+                      {t.phone}
                     </span>
                     <span className="text-[#82756c] font-mono">{settings.phone}</span>
                   </div>
@@ -90,7 +120,7 @@ export const ContactPage: React.FC = () => {
                     <Mail className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="font-semibold text-[#4A382D] block">Customer Service</span>
+                    <span className="font-semibold text-[#4A382D] block">{t.service}</span>
                     <span className="text-[#82756c]">{settings.email}</span>
                   </div>
                 </div>
@@ -101,7 +131,7 @@ export const ContactPage: React.FC = () => {
                     <MapPin className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="font-semibold text-[#4A382D] block">Atelier Location</span>
+                    <span className="font-semibold text-[#4A382D] block">{t.location}</span>
                     <span className="text-[#82756c]">{settings.address}</span>
                   </div>
                 </div>
@@ -110,7 +140,7 @@ export const ContactPage: React.FC = () => {
               {/* Social Channels */}
               <div className="border-t border-[#d4c3b9] pt-4">
                 <span className="text-[10px] uppercase font-sans tracking-widest text-[#77553b] font-semibold block mb-3">
-                  Follow Our Journey
+                  {t.follow}
                 </span>
                 <div className="flex items-center gap-3">
                   <a
@@ -146,15 +176,15 @@ export const ContactPage: React.FC = () => {
           <div className="lg:col-span-7">
             <div className="bg-[#FFFDF9] rounded-xl border border-[#d4c3b9] p-6 sm:p-8 shadow-xs">
               <h2 className="text-lg font-serif text-[#4A382D] border-b border-[#d4c3b9] pb-3 mb-6">
-                Send an Inquiry
+                {t.inquiry}
               </h2>
 
               {submitted ? (
                 <div className="p-8 bg-emerald-50 border border-emerald-200 rounded-lg text-center space-y-3">
                   <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto" />
-                  <h3 className="text-base font-serif text-emerald-800">Message Dispatched</h3>
+                  <h3 className="text-base font-serif text-emerald-800">{t.submittedTitle}</h3>
                   <p className="text-xs text-emerald-700 max-w-sm mx-auto">
-                    Thank you, {name}. Our client experience team in Cairo will respond to your inquiry shortly.
+                    {t.submittedText.replace('{name}', name)}
                   </p>
                 </div>
               ) : (
@@ -162,28 +192,28 @@ export const ContactPage: React.FC = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="text-xs font-semibold text-[#4A382D] block mb-1">
-                        Full Name *
+                        {t.fullName}
                       </label>
                       <input
                         type="text"
                         required
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        placeholder="Your name"
+                        placeholder={t.placeholderName}
                         className="w-full text-xs p-3 bg-[#F5E6D3]/30 border border-[#d4c3b9] rounded focus:outline-none focus:border-[#77553b]"
                       />
                     </div>
 
                     <div>
                       <label className="text-xs font-semibold text-[#4A382D] block mb-1">
-                        Email Address *
+                        {t.emailLabel}
                       </label>
                       <input
                         type="email"
                         required
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="your.email@domain.com"
+                        placeholder={t.placeholderEmail}
                         className="w-full text-xs p-3 bg-[#F5E6D3]/30 border border-[#d4c3b9] rounded focus:outline-none focus:border-[#77553b]"
                       />
                     </div>
@@ -191,30 +221,30 @@ export const ContactPage: React.FC = () => {
 
                   <div>
                     <label className="text-xs font-semibold text-[#4A382D] block mb-1">
-                      Topic / Inquiry Type
+                      {t.topic}
                     </label>
                     <select
                       value={subject}
                       onChange={(e) => setSubject(e.target.value)}
                       className="w-full text-xs p-3 bg-[#F5E6D3]/30 border border-[#d4c3b9] rounded focus:outline-none focus:border-[#77553b] cursor-pointer"
                     >
-                      <option value="Product / Sizing Question">Product / Sizing Advice</option>
-                      <option value="Order Tracking / Delivery">Order Tracking / Delivery</option>
-                      <option value="Payment Transfer Confirmation">Payment Transfer Confirmation</option>
-                      <option value="Wholesale / Collaborations">Wholesale / Atelier Collaboration</option>
+                      <option value="Product / Sizing Question">{t.productQuestion}</option>
+                      <option value="Order Tracking / Delivery">{t.orderTracking}</option>
+                      <option value="Payment Transfer Confirmation">{t.payment}</option>
+                      <option value="Wholesale / Collaborations">{t.wholesale}</option>
                     </select>
                   </div>
 
                   <div>
                     <label className="text-xs font-semibold text-[#4A382D] block mb-1">
-                      Message *
+                      {t.messageLabel}
                     </label>
                     <textarea
                       required
                       rows={5}
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
-                      placeholder="How can our atelier specialists assist you?"
+                      placeholder={t.placeholderMessage}
                       className="w-full text-xs p-3 bg-[#F5E6D3]/30 border border-[#d4c3b9] rounded focus:outline-none focus:border-[#77553b]"
                     />
                   </div>
@@ -224,7 +254,7 @@ export const ContactPage: React.FC = () => {
                     className="w-full sm:w-auto px-8 py-3.5 bg-[#B89578] hover:bg-[#96745A] text-[#FFFDF9] text-xs font-sans uppercase tracking-wider font-semibold rounded transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
                   >
                     <Send className="w-4 h-4" />
-                    <span>Send Message</span>
+                    <span>{t.sendMessage}</span>
                   </button>
                 </form>
               )}

@@ -1514,7 +1514,7 @@ export const AdminDashboardPage: React.FC = () => {
 
                 <div>
                   <div className="flex items-center justify-between mb-1">
-                    <label className="font-semibold block">Category Silhouette *</label>
+                    <label className="font-semibold block">Category Style *</label>
                     <button
                       type="button"
                       onClick={() => {
@@ -1569,7 +1569,7 @@ export const AdminDashboardPage: React.FC = () => {
                   required
                   value={prodDesc}
                   onChange={(e) => setProdDesc(e.target.value)}
-                  placeholder="Details on fabric, silhouette, care instructions..."
+                    placeholder="Details on fabric, style, care instructions..."
                   className="w-full p-2.5 bg-[#F5E6D3]/30 border border-[#d4c3b9] rounded"
                 />
               </div>

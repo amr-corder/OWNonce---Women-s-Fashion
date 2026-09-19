@@ -78,7 +78,7 @@ export const ProductsPage: React.FC = () => {
                   : 'bg-[#F5E6D3]/60 text-[#4A382D] hover:bg-[#F5E6D3]'
               }`}
             >
-              All Silhouettes ({products.length})
+              All Styles ({products.length})
             </button>
 
             {categories.map((cat) => (
@@ -154,14 +154,14 @@ export const ProductsPage: React.FC = () => {
         {/* Mobile Category Select Dropdown */}
         <div className="lg:hidden mb-6">
           <label className="text-xs font-semibold text-[#82756c] block mb-1">
-            Filter by Silhouette:
+                Filter by Style:
           </label>
           <select
             value={activeCategory}
             onChange={(e) => handleCategoryChange(e.target.value)}
             className="w-full bg-[#FFFDF9] text-[#4A382D] text-xs py-2.5 px-3 rounded-lg border border-[#d4c3b9]"
           >
-            <option value="All">All Silhouettes ({products.length})</option>
+                <option value="All">All Styles ({products.length})</option>
             {categories.map((c) => (
               <option key={c.id} value={c.name}>
                 {c.name}
@@ -188,7 +188,7 @@ export const ProductsPage: React.FC = () => {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {filteredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

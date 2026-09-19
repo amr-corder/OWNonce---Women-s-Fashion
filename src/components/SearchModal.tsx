@@ -55,7 +55,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
             autoFocus
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search tops by silhouette, color, or category..."
+            placeholder="Search tops by style, color, or category..."
             className="w-full text-base font-sans text-[#4A382D] placeholder:text-[#82756c] bg-transparent focus:outline-none"
           />
           {query && (

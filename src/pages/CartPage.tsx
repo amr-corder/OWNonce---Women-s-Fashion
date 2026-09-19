@@ -52,7 +52,7 @@ export const CartPage: React.FC = () => {
             <ShoppingBag className="w-12 h-12 mx-auto text-[#d4c3b9] dark:text-[#524135] stroke-1" />
             <h2 className="text-xl font-serif text-[#4A382D] dark:text-[#FFFDF9]">Your shopping bag is empty</h2>
             <p className="text-xs text-[#82756c] dark:text-[#AD9E92] max-w-sm mx-auto">
-              Explore our core tops collection and find your perfect essential silhouette.
+              Explore our core tops collection and find your perfect essential style.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
               <Link

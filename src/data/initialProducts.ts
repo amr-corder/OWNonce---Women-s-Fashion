@@ -3,6 +3,7 @@ import { Product, Category, StoreSettings, Review } from '../types';
 export const DEFAULT_COLORS = [
   { name: 'Black', hex: '#000000' },
   { name: 'White', hex: '#FFFFFF' },
+  { name: 'Red', hex: '#D00000' },
   { name: 'Beige', hex: '#D9C2A6' },
   { name: 'Olive', hex: '#808000' },
   { name: 'Burgundy', hex: '#800020' },
@@ -15,7 +16,7 @@ export const DEFAULT_CATEGORIES: Category[] = [
     id: 'cat-rn-ss',
     name: 'Basic Round Neck – Short Sleeve',
     slug: 'basic-round-neck-short-sleeve',
-    description: 'Essential everyday round neck tops with refined short sleeves in premium breathable cotton.',
+    description: 'Essential everyday round neck tops with refined short sleeves in a premium 94% cotton and 6% Lycra blend.',
     image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80',
   },
   {
@@ -29,7 +30,7 @@ export const DEFAULT_CATEGORIES: Category[] = [
     id: 'cat-vn-ss',
     name: 'Basic V-Neck – Short Sleeve',
     slug: 'basic-v-neck-short-sleeve',
-    description: 'Flattering classic V-neck silhouette with structured short sleeves and silky touch.',
+    description: 'Flattering classic V-neck design with structured short sleeves and silky touch.',
     image: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=800&q=80',
   },
   {
@@ -45,7 +46,7 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: 'prod-rn-ss-01',
     name: 'Essential Ribbed Round Neck Top',
-    description: 'Crafted from premium long-staple combed cotton with subtle stretch. This essential short-sleeve top features a reinforced crew neckline, tailored double-stitched hems, and an ultra-soft hand feel that retains shape wash after wash.',
+    description: 'Crafted from a premium 94% cotton and 6% Lycra blend. This essential short-sleeve top features a reinforced crew neckline, tailored double-stitched hems, and an ultra-soft hand feel that retains shape wash after wash.',
     price: 680,
     originalPrice: 850,
     category: 'Basic Round Neck – Short Sleeve',
@@ -65,7 +66,7 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: 'prod-rn-ss-02',
     name: 'Modal Soft-Touch Round Neck Tee',
-    description: 'An exceptionally fluid silhouette cut from ultra-fine modal blend. Breathable, featherlight, and finished with clean seamless cuffs for a relaxed yet polished everyday aesthetic.',
+    description: 'An exceptionally fluid design cut from ultra-fine modal blend. Breathable, featherlight, and finished with clean seamless cuffs for a relaxed yet polished everyday aesthetic.',
     price: 720,
     category: 'Basic Round Neck – Short Sleeve',
     images: [
@@ -77,6 +78,7 @@ export const INITIAL_PRODUCTS: Product[] = [
       { name: 'Beige', hex: '#D9C2A6' },
       { name: 'White', hex: '#FFFFFF' },
       { name: 'Black', hex: '#000000' },
+      { name: 'Red', hex: '#D00000' },
       { name: 'Olive', hex: '#808000' },
     ],
     stock: 32,
@@ -128,7 +130,7 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: 'prod-vn-ss-01',
     name: 'Classic Tailored V-Neck Short Sleeve',
-    description: 'Designed with a precisely balanced V-neck depth that elongates the collarbone while ensuring modest comfort. Spun from 100% organic Egyptian cotton with silky mercerized sheen.',
+    description: 'Designed with a precisely balanced V-neck depth that elongates the collarbone while ensuring modest comfort. Spun from a 94% cotton and 6% Lycra blend with a silky mercerized sheen.',
     price: 750,
     originalPrice: 920,
     category: 'Basic V-Neck – Short Sleeve',
@@ -159,6 +161,7 @@ export const INITIAL_PRODUCTS: Product[] = [
       { name: 'Olive', hex: '#808000' },
       { name: 'Beige', hex: '#D9C2A6' },
       { name: 'Black', hex: '#000000' },
+      { name: 'Red', hex: '#D00000' },
       { name: 'Burgundy', hex: '#800020' },
     ],
     stock: 22,
@@ -170,7 +173,7 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: 'prod-vn-sl-01',
     name: 'Clean Cut Sleeveless V-Neck Cami',
-    description: 'Minimalist sleeveless silhouette featuring clean angular V-neck cut and subtle side slits. Tailored to tuck cleanly or flow gracefully untucked.',
+    description: 'Minimalist sleeveless design featuring clean angular V-neck cut and subtle side slits. Tailored to tuck cleanly or flow gracefully untucked.',
     price: 610,
     category: 'Basic V-Neck – Sleeveless',
     images: [
@@ -201,6 +204,7 @@ export const INITIAL_PRODUCTS: Product[] = [
       { name: 'Beige', hex: '#D9C2A6' },
       { name: 'White', hex: '#FFFFFF' },
       { name: 'Black', hex: '#000000' },
+      { name: 'Red', hex: '#D00000' },
     ],
     stock: 19,
     isAvailable: true,
@@ -256,9 +260,9 @@ export const INITIAL_REVIEWS: Review[] = [
 export const DEFAULT_STORE_SETTINGS: StoreSettings = {
   storeName: 'OWNonce',
   tagline: 'Refined Simplicity in Women\'s Essentials',
-  phone: '+20 102 226 7922',
-  whatsapp: '+20 102 226 7922',
-  email: 'concierge@ownonce.com',
+  phone: '+20 150 558 3399',
+  whatsapp: '+20 150 558 3399',
+  email: 'ownonce.co@gmail.com',
   address: '14 Al-Thawra St, Heliopolis, Cairo, Egypt',
   vodafoneCashNumber: '01022267922',
   instapayAccount: 'ownonce@instapay',

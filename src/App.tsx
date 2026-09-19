@@ -7,6 +7,7 @@ import {
   Navigate,
 } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
+import { LanguageProvider } from './context/LanguageContext';
 import { StoreProvider } from './context/StoreContext';
 import { AdminAuthProvider } from './context/AdminAuthContext';
 import { Navbar } from './components/Navbar';
@@ -91,13 +92,15 @@ function AppLayout() {
 export default function App() {
   return (
     <ThemeProvider>
-      <AdminAuthProvider>
-        <StoreProvider>
-          <Router>
-            <AppLayout />
-          </Router>
-        </StoreProvider>
-      </AdminAuthProvider>
+      <LanguageProvider>
+        <AdminAuthProvider>
+          <StoreProvider>
+            <Router>
+              <AppLayout />
+            </Router>
+          </StoreProvider>
+        </AdminAuthProvider>
+      </LanguageProvider>
     </ThemeProvider>
   );
 }

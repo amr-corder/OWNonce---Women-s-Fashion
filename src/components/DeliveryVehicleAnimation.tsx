@@ -86,7 +86,7 @@ export const DeliveryVehicleAnimation: React.FC<DeliveryVehicleAnimationProps> =
           </button>
         </div>
 
-        {/* Animated Background Landscape (City / Hills Silhouette) */}
+        {/* Animated Background Landscape (City / Hills Outline) */}
         <div className="absolute inset-x-0 bottom-14 h-24 overflow-hidden pointer-events-none opacity-30 dark:opacity-20">
           <div className="flex w-[200%] animate-[marquee_15s_linear_infinite]">
             <svg className="w-full h-full" viewBox="0 0 1000 80" preserveAspectRatio="none" fill="currentColor">

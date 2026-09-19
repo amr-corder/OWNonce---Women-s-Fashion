@@ -39,11 +39,11 @@ export const AboutPage: React.FC = () => {
                 Why "OWNonce"?
               </h2>
               <p className="text-xs sm:text-sm text-[#82756c] leading-relaxed">
-                The name reflects our foundational belief: when a garment is tailored with perfection from authentic Egyptian long-staple cotton, you only need to <em>own it once</em>. It retains its hand-feel, rich pigment, and sculpted silhouette wash after wash.
+                The name reflects our foundational belief: when a garment is tailored with perfection from a refined 94% cotton and 6% Lycra blend, you only need to <em>own it once</em>. It retains its hand-feel, rich pigment, and sculpted shape wash after wash.
               </p>
             </div>
             <div className="bg-[#F5E6D3]/40 p-6 rounded-lg border border-[#d4c3b9] space-y-2">
-              <h3 className="font-serif text-base text-[#4A382D]">The Four Core Silhouettes:</h3>
+              <h3 className="font-serif text-base text-[#4A382D]">The Four Core Styles:</h3>
               <ul className="text-xs text-[#82756c] space-y-1.5 list-disc list-inside">
                 <li>Basic Round Neck – Short Sleeve</li>
                 <li>Basic Round Neck – Sleeveless</li>
@@ -58,7 +58,7 @@ export const AboutPage: React.FC = () => {
               <div className="w-10 h-10 rounded-full bg-[#F5E6D3] text-[#77553b] flex items-center justify-center mb-3">
                 <Leaf className="w-5 h-5" />
               </div>
-              <h3 className="text-sm font-semibold text-[#4A382D]">100% Combed Cotton</h3>
+              <h3 className="text-sm font-semibold text-[#4A382D]">94% Cotton / 6% Lycra</h3>
               <p className="text-xs text-[#82756c] leading-relaxed">
                 We strictly source extra-long staple Egyptian fibers that are gently combed to eliminate impurities, providing an ultra-soft second-skin touch.
               </p>

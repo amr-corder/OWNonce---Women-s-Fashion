@@ -2,16 +2,60 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Star, MessageCircle, Instagram, Facebook, ShieldCheck, Truck, RefreshCw } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
+import { useLanguage } from '../context/LanguageContext';
 import { ProductCard } from '../components/ProductCard';
 import { TikTokIcon } from '../components/TikTokIcon';
 
 export const HomePage: React.FC = () => {
   const { products, categories, reviews, settings } = useStore();
+  const { isArabic } = useLanguage();
 
   const featuredProducts = products.filter((p) => p.isAvailable).slice(0, 4);
   const approvedReviews = reviews.filter((r) => r.isApproved).slice(0, 3);
 
   const whatsappNumber = settings.whatsapp ? settings.whatsapp.replace(/[^0-9]/g, '') : '201017361763';
+
+  const t = {
+    heroTitle: isArabic ? 'أساسيات مصممة للمرأة العصرية' : 'Refined Essentials for the Modern Woman',
+    heroText: isArabic
+      ? 'اكتشف قمصان أساسية أنيقة مصنوعة من مزيج 94% قطن و6% ليكرا، من أعناق دائرية إلى تصميمات V-neck متناسقة، لتصنع أسلوبك اليومي بثقة.'
+      : 'Explore timeless basic tops tailored in a premium 94% cotton and 6% Lycra blend. From classic round necks to contoured V-neck styles, built to elevate every wardrobe.',
+    explore: isArabic ? 'استكشف المجموعة' : 'Explore Collection',
+    philosophy: isArabic ? 'فلسفتنا' : 'Our Philosophy',
+    fastShipping: isArabic ? 'شحن سريع داخل مصر' : 'Fast Egypt Shipping',
+    cotton: isArabic ? '94% قطن و6% ليكرا' : '94% Cotton / 6% Lycra',
+    fit: isArabic ? 'ملاءمة سلسة' : 'Effortless Fit',
+    coreCapsule: isArabic ? 'القطعة الأساسية' : 'The Core Capsule',
+    shopByStyle: isArabic ? 'تسوق حسب الشكل' : 'Shop by Style',
+    discover: isArabic ? 'اكتشف كل مجموعة مختارة بملامحها وتصاميمها الفريدة.' : 'Discover each curated collection featuring our latest designs and signature fabrics.',
+    seasonal: isArabic ? 'إصدارات موسمية' : 'Seasonal Releases',
+    latest: isArabic ? 'آخر المستلزمات الأساسية' : 'Latest Essentials',
+    viewAll: isArabic ? 'عرض كل القمصان' : 'View All Tops',
+    standard: isArabic ? 'معيار OWNonce' : 'The OWNonce Standard',
+    storyTitle: isArabic ? 'مصمم ليُمتلك مرة واحدة. ويُلبس للأبد.' : 'Designed to be Owned Once. Worn Forever.',
+    storyOne: isArabic
+      ? 'في OWNonce نرفض الاتجاهات العابرة. نركز على أشكال أساسية مصممة بدقة لتكون أساس خزانة ملابسك. كل خطّ، منحنى فتحة الذراع، وعمق الرقبة يتم اختباره بعناية للراحة طوال اليوم.'
+      : 'At OWNonce, we reject fleeting trends. We focus on masterfully calibrated basic designs that serve as the foundation of your wardrobe. Every seam, armhole curve, and neckline depth is meticulously tested for all-day comfort.',
+    storyTwo: isArabic
+      ? 'مصنوع من ألياف طويلة التيلة، تمنح قمصاننا ملمسًا ناعمًا ومريحًا وتحتفظ ببنيتها الفاخرة مع كل ارتداء.'
+      : 'Spun from long-staple fibers, our tops provide a breathable, silky touch and retain their pristine structure wear after wear.',
+    readStory: isArabic ? 'اقرأ قصتنا كاملة' : 'Read Our Full Story',
+    clientExperiences: isArabic ? 'تجارب عملاء موثقة' : 'Verified Client Experiences',
+    community: isArabic ? 'كلمات من مجتمعنا' : 'Words from Our Community',
+    concierge: isArabic ? 'استشارة مباشرة' : 'Direct Concierge',
+    stylingHelp: isArabic ? 'هل تحتاج إلى نصائح شخصية عن المقاس أو الأسلوب؟' : 'Need Personal Styling or Sizing Advice?',
+    conciergeText: isArabic ? 'متخصصو أطلية القاهرة مستعدون لمساعدتك عبر الواتساب، إنستغرام، فيسبوك أو تيك توك.' : 'Our atelier specialists in Cairo are ready to assist you on WhatsApp, Instagram, Facebook, or TikTok.',
+    whatsappConcierge: isArabic ? 'واتساب كونسيرج' : 'WhatsApp Concierge',
+    instagram: 'Instagram',
+    facebook: 'Facebook',
+    tiktok: 'TikTok',
+    design: isArabic ? 'تصميم' : 'Design',
+    exploreLabel: isArabic ? 'استكشف' : 'Explore',
+    verified: isArabic ? 'طلب موثّق' : 'Verified Order',
+    viewCollection: isArabic ? 'عرض المجموعة' : 'View Collection',
+    designPlural: isArabic ? 'تصاميم' : 'Designs',
+    from: isArabic ? 'من' : 'From',
+  };
 
   return (
     <div id="home-page" className="min-h-screen bg-[#F5E6D3] text-[#4A382D]">
@@ -84,12 +128,12 @@ export const HomePage: React.FC = () => {
 
           {/* Heading */}
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-serif text-[#FFFDF9] font-normal leading-[1.15] tracking-tight mb-6 max-w-3xl drop-shadow-xs">
-            Refined Essentials for the Modern Woman
+            {t.heroTitle}
           </h1>
 
           {/* Paragraph */}
           <p className="text-sm sm:text-base lg:text-lg font-sans text-[#F5E6D3]/90 leading-relaxed max-w-2xl mx-auto mb-8 font-light">
-            Explore timeless basic tops tailored in premium long-staple Egyptian cotton. From classic round necks to contoured V-neck silhouettes, built to elevate every wardrobe.
+            {t.heroText}
           </p>
 
           {/* Call-to-action Buttons Centered */}
@@ -98,7 +142,7 @@ export const HomePage: React.FC = () => {
               to="/products"
               className="w-full sm:w-auto px-9 py-4 bg-[#B89578] hover:bg-[#96745A] text-[#FFFDF9] text-xs font-sans font-semibold tracking-[0.2em] uppercase rounded transition-all text-center shadow-lg hover:shadow-xl flex items-center justify-center gap-2 cursor-pointer"
             >
-              <span>Explore Collection</span>
+              <span>{t.explore}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
 
@@ -106,7 +150,7 @@ export const HomePage: React.FC = () => {
               to="/about"
               className="w-full sm:w-auto px-8 py-4 bg-[#FFFDF9]/10 hover:bg-[#FFFDF9]/20 backdrop-blur-md border border-[#FFFDF9]/30 text-[#FFFDF9] text-xs font-sans font-medium tracking-[0.15em] uppercase rounded transition-colors text-center"
             >
-              Our Philosophy
+              {t.philosophy}
             </Link>
           </div>
 
@@ -114,31 +158,31 @@ export const HomePage: React.FC = () => {
           <div className="mt-12 pt-8 w-full max-w-2xl border-t border-[#FFFDF9]/20 grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-[#F5E6D3]/85">
             <div className="flex items-center justify-center gap-2">
               <Truck className="w-4 h-4 text-[#E6CDB8]" />
-              <span>Fast Egypt Shipping</span>
+              <span>{t.fastShipping}</span>
             </div>
             <div className="flex items-center justify-center gap-2">
               <ShieldCheck className="w-4 h-4 text-[#E6CDB8]" />
-              <span>100% Pure Cotton</span>
+              <span>{t.cotton}</span>
             </div>
             <div className="flex items-center justify-center gap-2">
               <RefreshCw className="w-4 h-4 text-[#E6CDB8]" />
-              <span>Effortless Fit</span>
+              <span>{t.fit}</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. Categories / Silhouettes Section (Dynamic based on store products) */}
+      {/* 2. Categories / Styles Section (Dynamic based on store products) */}
       <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12">
           <span className="text-[10px] sm:text-xs uppercase font-sans tracking-[0.3em] text-[#77553b] font-semibold block mb-2">
-            The Core Capsule
+            {t.coreCapsule}
           </span>
           <h2 className="text-2xl sm:text-3xl font-serif text-[#4A382D] font-normal">
-            Shop by Silhouette
+            {t.shopByStyle}
           </h2>
           <p className="mt-2 text-xs sm:text-sm text-[#82756c] max-w-md mx-auto">
-            Discover each curated collection featuring our latest designs and signature fabrics.
+            {t.discover}
           </p>
         </div>
 
@@ -165,7 +209,7 @@ export const HomePage: React.FC = () => {
 
             const description =
               existingCat?.description ||
-              `Signature ${catName} pieces tailored with premium fabrics and refined silhouettes.`;
+              `Signature ${catName} pieces tailored with premium fabrics and refined styles.`;
 
             const piecesCount = catProducts.length;
             const minPrice =
@@ -212,7 +256,7 @@ export const HomePage: React.FC = () => {
                     />
                     {/* Badge for number of pieces */}
                     <div className="absolute top-3 right-3 px-2.5 py-1 bg-[#2C221E]/80 backdrop-blur-md text-[#FFFDF9] text-[10px] font-medium tracking-wider rounded-full border border-white/10 shadow-xs">
-                      {cat.count} {cat.count === 1 ? 'Design' : 'Designs'}
+                      {cat.count} {cat.count === 1 ? t.design : t.designPlural}
                     </div>
                   </div>
 
@@ -229,15 +273,15 @@ export const HomePage: React.FC = () => {
                     <div className="pt-4 flex items-center justify-between border-t border-[#F5E6D3] mt-4">
                       {cat.minPrice ? (
                         <span className="text-[11px] font-sans text-[#77553b] font-medium">
-                          From {cat.minPrice.toLocaleString()} EGP
+                          {t.from} {cat.minPrice.toLocaleString()} EGP
                         </span>
                       ) : (
                         <span className="text-[11px] font-sans text-[#82756c]">
-                          View Collection
+                          {t.viewCollection}
                         </span>
                       )}
                       <div className="flex items-center gap-1 text-xs text-[#77553b] font-semibold group-hover:translate-x-0.5 transition-transform">
-                        <span>Explore</span>
+                        <span>{t.exploreLabel}</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </div>
                     </div>
@@ -255,22 +299,22 @@ export const HomePage: React.FC = () => {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
             <div>
               <span className="text-[10px] sm:text-xs uppercase font-sans tracking-[0.3em] text-[#77553b] font-semibold block mb-1">
-                Seasonal Releases
+                {t.seasonal}
               </span>
               <h2 className="text-2xl sm:text-3xl font-serif text-[#4A382D] font-normal">
-                Latest Essentials
+                {t.latest}
               </h2>
             </div>
             <Link
               to="/products"
               className="text-xs font-sans tracking-[0.2em] uppercase font-semibold text-[#77553b] hover:text-[#4A382D] flex items-center gap-1 transition-colors"
             >
-              <span>View All Tops ({products.length})</span>
+              <span>{t.viewAll} ({products.length})</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {featuredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -284,16 +328,16 @@ export const HomePage: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             <div className="lg:col-span-6 space-y-5">
               <span className="text-[10px] sm:text-xs uppercase font-sans tracking-[0.3em] text-[#77553b] font-semibold block">
-                The OWNonce Standard
+                {t.standard}
               </span>
               <h2 className="text-2xl sm:text-3xl font-serif text-[#4A382D] font-normal leading-tight">
-                Designed to be Owned Once. Worn Forever.
+                {t.storyTitle}
               </h2>
               <p className="text-xs sm:text-sm font-sans text-[#82756c] leading-relaxed">
-                At OWNonce, we reject fleeting trends. We focus on masterfully calibrated basic silhouettes that serve as the foundation of your wardrobe. Every seam, armhole curve, and neckline depth is meticulously tested for all-day comfort.
+                {t.storyOne}
               </p>
               <p className="text-xs sm:text-sm font-sans text-[#82756c] leading-relaxed">
-                Spun from long-staple fibers, our tops provide a breathable, silky touch and retain their pristine structure wear after wear.
+                {t.storyTwo}
               </p>
 
               <div className="pt-2">
@@ -301,7 +345,7 @@ export const HomePage: React.FC = () => {
                   to="/about"
                   className="inline-flex items-center gap-2 text-xs font-sans tracking-[0.2em] uppercase font-semibold text-[#B89578] hover:text-[#96745A] transition-colors"
                 >
-                  <span>Read Our Full Story</span>
+                  <span>{t.readStory}</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
@@ -328,10 +372,10 @@ export const HomePage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="text-[10px] sm:text-xs uppercase font-sans tracking-[0.3em] text-[#77553b] font-semibold block mb-1">
-              Verified Client Experiences
+              {t.clientExperiences}
             </span>
             <h2 className="text-2xl sm:text-3xl font-serif text-[#4A382D] font-normal">
-              Words from Our Community
+              {t.community}
             </h2>
           </div>
 
@@ -353,7 +397,7 @@ export const HomePage: React.FC = () => {
                 </div>
                 <div className="pt-4 mt-4 border-t border-[#d4c3b9]/40 flex items-center justify-between text-xs">
                   <span className="font-semibold text-[#4A382D]">{rev.customerName}</span>
-                  <span className="text-[#82756c]">Verified Order</span>
+                  <span className="text-[#82756c]">{t.verified}</span>
                 </div>
               </div>
             ))}
@@ -365,13 +409,13 @@ export const HomePage: React.FC = () => {
       <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="bg-[#FFFDF9] rounded-xl border border-[#d4c3b9] p-8 sm:p-12 max-w-3xl mx-auto space-y-6">
           <span className="text-[10px] sm:text-xs uppercase font-sans tracking-[0.3em] text-[#77553b] font-semibold block">
-            Direct Concierge
+            {t.concierge}
           </span>
           <h2 className="text-2xl sm:text-3xl font-serif text-[#4A382D] font-normal">
-            Need Personal Styling or Sizing Advice?
+            {t.stylingHelp}
           </h2>
           <p className="text-xs sm:text-sm font-sans text-[#82756c] max-w-md mx-auto">
-            Our atelier specialists in Cairo are ready to assist you on WhatsApp, Instagram, Facebook, or TikTok.
+            {t.conciergeText}
           </p>
 
           <div className="flex flex-wrap justify-center gap-3 pt-2">
@@ -382,7 +426,7 @@ export const HomePage: React.FC = () => {
               className="px-5 py-3 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded text-xs font-sans font-semibold tracking-wider flex items-center gap-2 transition-colors cursor-pointer"
             >
               <MessageCircle className="w-4 h-4" />
-              <span>WhatsApp Concierge</span>
+              <span>{t.whatsappConcierge}</span>
             </a>
 
             <a
@@ -392,7 +436,7 @@ export const HomePage: React.FC = () => {
               className="px-5 py-3 bg-[#E1306C] hover:bg-[#c9265e] text-white rounded text-xs font-sans font-semibold tracking-wider flex items-center gap-2 transition-colors cursor-pointer"
             >
               <Instagram className="w-4 h-4" />
-              <span>Instagram</span>
+              <span>{t.instagram}</span>
             </a>
 
             <a
@@ -402,7 +446,7 @@ export const HomePage: React.FC = () => {
               className="px-5 py-3 bg-[#1877F2] hover:bg-[#1565cc] text-white rounded text-xs font-sans font-semibold tracking-wider flex items-center gap-2 transition-colors cursor-pointer"
             >
               <Facebook className="w-4 h-4" />
-              <span>Facebook</span>
+              <span>{t.facebook}</span>
             </a>
 
             <a
@@ -412,7 +456,7 @@ export const HomePage: React.FC = () => {
               className="px-5 py-3 bg-[#010101] hover:bg-[#222222] text-white rounded text-xs font-sans font-semibold tracking-wider flex items-center gap-2 transition-colors cursor-pointer"
             >
               <TikTokIcon className="w-4 h-4" />
-              <span>TikTok</span>
+              <span>{t.tiktok}</span>
             </a>
           </div>
         </div>

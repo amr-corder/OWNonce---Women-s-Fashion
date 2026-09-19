@@ -794,7 +794,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             id: `cat-${Date.now()}`,
             name: cleanCategoryName,
             slug: cleanCategoryName.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-            description: `Signature ${cleanCategoryName} silhouettes crafted with meticulous attention to detail.`,
+            description: `Signature ${cleanCategoryName} designs crafted with meticulous attention to detail.`,
             image:
               product.images?.[0] ||
               'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80',
@@ -833,7 +833,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             id: `cat-${Date.now()}`,
             name: cleanCategoryName,
             slug: cleanCategoryName.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-            description: `Signature ${cleanCategoryName} silhouettes crafted with meticulous attention to detail.`,
+            description: `Signature ${cleanCategoryName} designs crafted with meticulous attention to detail.`,
             image:
               partial.images?.[0] ||
               'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80',
