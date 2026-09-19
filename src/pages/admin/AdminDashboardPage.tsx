@@ -21,6 +21,7 @@ import {
   Printer,
   Copy,
   AlertCircle,
+  Layers3,
 } from 'lucide-react';
 import { useAdminAuth } from '../../context/AdminAuthContext';
 import { useStore } from '../../context/StoreContext';
@@ -33,6 +34,7 @@ import {
   ShippingZoneName,
   ProductColor,
   StoreSettings,
+  Category,
 } from '../../types';
 import { ALL_GOVERNORATES, ZONES } from '../../data/shippingRates';
 import { PaymentProofModal } from '../../components/admin/PaymentProofModal';
@@ -73,12 +75,15 @@ export const AdminDashboardPage: React.FC = () => {
     settings,
     updateSettings,
     categories,
+    addCategory,
+    updateCategory,
+    deleteCategory,
     getShippingForGovernorate,
   } = useStore();
   const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = useState<
-    'orders' | 'products' | 'shipping' | 'reviews' | 'settings'
+    'orders' | 'products' | 'categories' | 'shipping' | 'reviews' | 'settings'
   >('orders');
 
   // Order Filters & Proof Viewer & Deletions
@@ -121,6 +126,45 @@ export const AdminDashboardPage: React.FC = () => {
   const [prodColors, setProdColors] = useState<ProductColor[]>(ADMIN_DEFAULT_COLORS);
   const [prodSizes, setProdSizes] = useState<string[]>(ADMIN_DEFAULT_SIZES);
   const [prodAvailable, setProdAvailable] = useState(true);
+
+  // Category Management State
+  const [editingCategoryId, setEditingCategoryId] = useState<string | null>(null);
+  const [categoryName, setCategoryName] = useState('');
+  const [categoryDescription, setCategoryDescription] = useState('');
+  const [categoryImage, setCategoryImage] = useState<string[]>([]);
+
+  const resetCategoryForm = () => {
+    setEditingCategoryId(null);
+    setCategoryName('');
+    setCategoryDescription('');
+    setCategoryImage([]);
+  };
+
+  const handleEditCategory = (category: Category) => {
+    setEditingCategoryId(category.id);
+    setCategoryName(category.name);
+    setCategoryDescription(category.description || '');
+    setCategoryImage(category.image ? [category.image] : []);
+  };
+
+  const handleSaveCategory = (event: React.FormEvent) => {
+    event.preventDefault();
+    const name = categoryName.trim();
+    if (!name) return;
+    const categoryData = {
+      name,
+      slug: name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+      description: categoryDescription.trim(),
+      image: categoryImage[0] || '',
+    };
+
+    if (editingCategoryId) {
+      updateCategory(editingCategoryId, categoryData);
+    } else {
+      addCategory(categoryData);
+    }
+    resetCategoryForm();
+  };
 
   // Shipping Configuration State
   const [originZone, setOriginZone] = useState<ShippingZoneName>(
@@ -420,6 +464,18 @@ export const AdminDashboardPage: React.FC = () => {
           >
             <Package className="w-4 h-4" />
             <span>Products ({products.length})</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('categories')}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-sans font-semibold uppercase tracking-wider transition-colors cursor-pointer ${
+              activeTab === 'categories'
+                ? 'bg-[#B89578] text-[#FFFDF9]'
+                : 'text-[#4A382D] hover:bg-[#F5E6D3]'
+            }`}
+          >
+            <Layers3 className="w-4 h-4" />
+            <span>Categories ({categories.length})</span>
           </button>
 
           <button
@@ -1234,7 +1290,92 @@ export const AdminDashboardPage: React.FC = () => {
           </div>
         )}
 
-        {/* 4. REVIEWS MODERATION TAB */}
+        {/* 4. CATEGORY MANAGEMENT TAB */}
+        {activeTab === 'categories' && (
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] gap-6">
+            <form
+              onSubmit={handleSaveCategory}
+              className="bg-[#FFFDF9] rounded-xl border border-[#d4c3b9] p-6 shadow-xs space-y-4 h-fit"
+            >
+              <div className="flex items-center justify-between border-b border-[#d4c3b9] pb-4">
+                <div>
+                  <h2 className="text-xl font-serif text-[#4A382D]">
+                    {editingCategoryId ? 'Edit Category' : 'Add Category'}
+                  </h2>
+                  <p className="text-xs text-[#82756c] mt-1">
+                    Manage the cards shown on the public Categories page.
+                  </p>
+                </div>
+                {editingCategoryId && (
+                  <button type="button" onClick={resetCategoryForm} className="text-xs text-[#77553b] underline cursor-pointer">
+                    Cancel
+                  </button>
+                )}
+              </div>
+
+              <div>
+                <label className="font-semibold block mb-1 text-xs">Category Name *</label>
+                <input
+                  required
+                  value={categoryName}
+                  onChange={(event) => setCategoryName(event.target.value)}
+                  placeholder="e.g. Summer Collection"
+                  className="w-full p-2.5 bg-[#F5E6D3]/30 border border-[#d4c3b9] rounded text-xs"
+                />
+              </div>
+
+              <div>
+                <label className="font-semibold block mb-1 text-xs">Description</label>
+                <textarea
+                  rows={3}
+                  value={categoryDescription}
+                  onChange={(event) => setCategoryDescription(event.target.value)}
+                  placeholder="Short description shown on the category card"
+                  className="w-full p-2.5 bg-[#F5E6D3]/30 border border-[#d4c3b9] rounded text-xs"
+                />
+              </div>
+
+              <ProductImageUploader images={categoryImage} onChange={setCategoryImage} />
+
+              <button
+                type="submit"
+                className="w-full px-4 py-3 bg-[#B89578] hover:bg-[#96745A] text-[#FFFDF9] text-xs uppercase tracking-wider font-semibold rounded transition-colors cursor-pointer"
+              >
+                {editingCategoryId ? 'Save Category Changes' : 'Add Category'}
+              </button>
+            </form>
+
+            <div className="bg-[#FFFDF9] rounded-xl border border-[#d4c3b9] p-6 shadow-xs space-y-3">
+              <div className="border-b border-[#d4c3b9] pb-4">
+                <h2 className="text-xl font-serif text-[#4A382D]">Your Categories</h2>
+                <p className="text-xs text-[#82756c] mt-1">Products use these exact names to appear inside each category.</p>
+              </div>
+              {categories.map((category) => (
+                <div key={category.id} className="flex items-center gap-3 p-3 bg-[#F5E6D3]/30 rounded-lg border border-[#d4c3b9]">
+                  {category.image ? (
+                    <img src={category.image} alt="" className="w-14 h-14 rounded object-cover shrink-0" />
+                  ) : (
+                    <div className="w-14 h-14 rounded bg-[#B89578] text-[#FFFDF9] flex items-center justify-center text-center text-[10px] font-semibold p-1 shrink-0">
+                      {category.name}
+                    </div>
+                  )}
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-semibold text-sm truncate">{category.name}</h3>
+                    <p className="text-[11px] text-[#82756c] line-clamp-2">{category.description || 'No description'}</p>
+                  </div>
+                  <button type="button" onClick={() => handleEditCategory(category)} className="p-2 text-[#77553b] hover:bg-[#F5E6D3] rounded cursor-pointer" title="Edit category">
+                    <Edit2 className="w-4 h-4" />
+                  </button>
+                  <button type="button" onClick={() => deleteCategory(category.id)} className="p-2 text-red-600 hover:bg-red-50 rounded cursor-pointer" title="Delete category">
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* 5. REVIEWS MODERATION TAB */}
         {activeTab === 'reviews' && (
           <div className="bg-[#FFFDF9] rounded-xl border border-[#d4c3b9] p-6 shadow-xs space-y-4">
             <h2 className="text-xl font-serif text-[#4A382D]">Client Reviews Moderation</h2>

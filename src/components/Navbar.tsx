@@ -5,7 +5,6 @@ import {
   Heart,
   Search,
   Menu,
-  ChevronDown,
   Sun,
   Moon,
 } from 'lucide-react';
@@ -18,9 +17,8 @@ import { motion, AnimatePresence } from 'motion/react';
 
 export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [categoriesDropdown, setCategoriesDropdown] = useState(false);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
-  const { totalCartCount, wishlistIds, categories } = useStore();
+  const { totalCartCount, wishlistIds } = useStore();
   const { isDark, toggleTheme } = useTheme();
   const { language, setLanguage, isArabic } = useLanguage();
   const location = useLocation();
@@ -96,45 +94,14 @@ export const Navbar: React.FC = () => {
                 {navLabels.products}
               </Link>
 
-              {/* Categories Dropdown */}
-              <div
-                className="relative group py-2"
-                onMouseEnter={() => setCategoriesDropdown(true)}
-                onMouseLeave={() => setCategoriesDropdown(false)}
+              <Link
+                to="/categories"
+                className={`transition-opacity hover:opacity-75 ${
+                  isActive('/categories') ? 'border-b border-brand-surface pb-0.5 opacity-100' : 'opacity-90'
+                }`}
               >
-                <Link
-                  to="/categories"
-                  className={`inline-flex items-center gap-1 opacity-90 hover:opacity-100 transition-opacity uppercase tracking-[0.2em] ${
-                    isActive('/categories') ? 'border-b border-brand-surface pb-0.5 opacity-100' : ''
-                  }`}
-                >
-                  <span>{navLabels.categories}</span>
-                  <ChevronDown className="w-3 h-3 transition-transform duration-200 group-hover:rotate-180" />
-                </Link>
-
-                <AnimatePresence>
-                  {categoriesDropdown && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 8 }}
-                      transition={{ duration: 0.18 }}
-                      className="absolute top-full left-1/2 -translate-x-1/2 w-64 bg-brand-surface dark:bg-[#1D1612] text-brand-text dark:text-[#F0E6DC] rounded-md shadow-lg border border-brand-border dark:border-[#3D3027] p-3 space-y-1.5 z-50 normal-case font-normal"
-                    >
-                      {categories.map((cat) => (
-                        <Link
-                          key={cat.id}
-                          to={`/products?category=${encodeURIComponent(cat.name)}`}
-                          onClick={() => setCategoriesDropdown(false)}
-                          className="block px-3 py-2 text-xs font-sans rounded hover:bg-brand-bg dark:hover:bg-[#2B221C] text-brand-text dark:text-[#F0E6DC] transition-colors"
-                        >
-                          {cat.name}
-                        </Link>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
+                {navLabels.categories}
+              </Link>
 
               <Link
                 to="/about"
@@ -377,24 +344,6 @@ export const Navbar: React.FC = () => {
               >
                 {navLabels.categories}
               </Link>
-
-              <div className="pt-2 pb-1 border-t border-b border-brand-surface/15 dark:border-[#3D3027]">
-                <span className="text-[10px] uppercase tracking-[0.3em] text-brand-border font-bold block mb-2">
-                  Categories
-                </span>
-                <div className="space-y-2 pl-2">
-                  {categories.map((cat) => (
-                    <Link
-                      key={cat.id}
-                      to={`/products?category=${encodeURIComponent(cat.name)}`}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="block text-xs text-brand-surface hover:opacity-80 py-0.5"
-                    >
-                      {cat.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
 
               <Link
                 to="/about"

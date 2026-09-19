@@ -39,7 +39,7 @@ export const CategoriesPage: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-7">
             {categories.map((category) => {
               const categoryProducts = getCategoryProducts(category.name);
-              const image = category.image || categoryProducts[0]?.images[0];
+              const image = category.image;
 
               return (
                 <Link
@@ -55,8 +55,8 @@ export const CategoriesPage: React.FC = () => {
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-[#B89578]">
-                        <Layers3 className="w-12 h-12" strokeWidth={1.2} />
+                      <div className="w-full h-full flex items-center justify-center p-6 text-center bg-[#B89578] text-[#FFFDF9]">
+                        <span className="font-serif text-2xl sm:text-3xl leading-tight">{category.name}</span>
                       </div>
                     )}
                   </div>
