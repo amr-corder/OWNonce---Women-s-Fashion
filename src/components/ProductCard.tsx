@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Heart, ShoppingBag, Check } from 'lucide-react';
 import { Product, ProductColor } from '../types';
 import { useStore } from '../context/StoreContext';
@@ -11,9 +11,8 @@ interface ProductCardProps {
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { isInWishlist, toggleWishlist, addToCart } = useStore();
   const [selectedColor, setSelectedColor] = useState<ProductColor>(product.colors[0] || { name: 'Black', hex: '#000000' });
+  const [selectedColorIndex, setSelectedColorIndex] = useState(0);
   const [selectedSize, setSelectedSize] = useState<string>(product.sizes[0] || 'M');
-  const [hovered, setHovered] = useState(false);
-  const navigate = useNavigate();
 
   const isFavorited = isInWishlist(product.id);
   const isInStock = product.isAvailable && product.stock > 0;
@@ -36,14 +35,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       className={`group relative min-w-0 bg-[#FFFDF9] dark:bg-[#1E1712] rounded-lg border border-[#d4c3b9]/50 dark:border-[#3D2C22] overflow-hidden shadow-xs transition-all duration-300 flex flex-col justify-between ${
         isInStock ? 'hover:shadow-md' : 'opacity-60 grayscale'
       }`}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
     >
       {/* Product Image Frame */}
       <div className="relative aspect-[4/5] sm:aspect-[3/4] w-full bg-[#F5E6D3] dark:bg-[#281E18] overflow-hidden cursor-pointer">
         <Link to={`/products/${product.id}`}>
           <img
-            src={hovered && product.images[1] ? product.images[1] : product.images[0]}
+            src={product.images[selectedColorIndex] || product.images[0]}
             alt={product.name}
             loading="lazy"
             className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
@@ -128,7 +125,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
           {/* Color Swatches */}
           <div className="flex items-center gap-1 mb-3 min-w-0">
-            {product.colors.map((c) => {
+            {product.colors.map((c, colorIndex) => {
               const isSelected = selectedColor.name === c.name;
               return (
                 <button
@@ -139,6 +136,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                     e.preventDefault();
                     e.stopPropagation();
                     setSelectedColor(c);
+                    setSelectedColorIndex(colorIndex);
                   }}
                   className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full transition-all duration-200 cursor-pointer flex items-center justify-center shrink-0 ${
                     isSelected
