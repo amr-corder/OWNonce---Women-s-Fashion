@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Upload,
   X,
@@ -87,12 +87,17 @@ export const ProductImageUploader: React.FC<ProductImageUploaderProps> = ({
   images,
   onChange,
 }) => {
+  const imagesRef = useRef(images);
   const [isDragging, setIsDragging] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [showUrlInput, setShowUrlInput] = useState(false);
   const [urlInput, setUrlInput] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    imagesRef.current = images;
+  }, [images]);
 
   const handleFiles = async (files: FileList | File[]) => {
     setErrorMsg(null);
@@ -109,7 +114,7 @@ export const ProductImageUploader: React.FC<ProductImageUploaderProps> = ({
       }
 
       if (newImagesList.length > 0) {
-        onChange([...images, ...newImagesList]);
+        onChange([...imagesRef.current, ...newImagesList]);
       } else {
         setErrorMsg('Please select valid image files.');
       }
@@ -171,7 +176,7 @@ export const ProductImageUploader: React.FC<ProductImageUploaderProps> = ({
   const handleAddUrl = (e: React.FormEvent) => {
     e.preventDefault();
     if (!urlInput.trim()) return;
-    onChange([...images, urlInput.trim()]);
+    onChange([...imagesRef.current, urlInput.trim()]);
     setUrlInput('');
     setShowUrlInput(false);
   };
