@@ -155,15 +155,6 @@ export const ProductDetailsPage: React.FC = () => {
                   alt={product.name}
                   className="w-full h-full object-cover"
                 />
-                {selectedColor && selectedColor.hex.toLowerCase() !== '#ffffff' && (
-                  <span
-                    aria-hidden="true"
-                    className={`pointer-events-none absolute inset-0 mix-blend-multiply transition-colors duration-300 ${
-                      selectedColor.hex.toLowerCase() === '#000000' ? 'opacity-10' : 'opacity-25'
-                    }`}
-                    style={{ backgroundColor: selectedColor.hex }}
-                  />
-                )}
 
                 {/* Weight Tag Badge */}
                 <div className="absolute top-4 left-4 px-3 py-1 bg-[#27180F]/75 text-[#FFFDF9] text-xs font-sans rounded-md tracking-wider backdrop-blur-xs">
@@ -225,7 +216,7 @@ export const ProductDetailsPage: React.FC = () => {
                     )}
                   </div>
                   <div className="flex items-center gap-3">
-                    {product.colors.map((c) => {
+                    {product.colors.map((c, colorIndex) => {
                       const isSelected = selectedColor?.name === c.name;
                       return (
                         <button
@@ -234,6 +225,9 @@ export const ProductDetailsPage: React.FC = () => {
                           title={c.name}
                           onClick={() => {
                             setSelectedColor(c);
+                            if (product.images[colorIndex]) {
+                              setActiveImageIdx(colorIndex);
+                            }
                             setColorError(false);
                           }}
                           className={`w-8 h-8 rounded-full transition-all duration-200 cursor-pointer flex items-center justify-center ${

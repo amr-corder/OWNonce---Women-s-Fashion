@@ -45,15 +45,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             loading="lazy"
             className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
           />
-          {selectedColor.hex.toLowerCase() !== '#ffffff' && (
-            <span
-              aria-hidden="true"
-              className={`pointer-events-none absolute inset-0 mix-blend-multiply transition-colors duration-300 ${
-                selectedColor.hex.toLowerCase() === '#000000' ? 'opacity-10' : 'opacity-25'
-              }`}
-              style={{ backgroundColor: selectedColor.hex }}
-            />
-          )}
         </Link>
 
         {/* Wishlist Button */}
