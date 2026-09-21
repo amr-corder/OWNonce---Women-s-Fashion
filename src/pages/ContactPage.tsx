@@ -97,7 +97,6 @@ export const ContactPage: React.FC = () => {
                   </div>
                   <div>
                     <span className="font-semibold text-[#4A382D] block">{t.whatsapp}</span>
-                    <span className="text-[#82756c]">{settings.whatsapp}</span>
                   </div>
                 </a>
 
@@ -125,18 +124,6 @@ export const ContactPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Atelier Address */}
-                {settings.address?.trim() && (
-                  <div className="flex items-start gap-3 p-3 bg-[#F5E6D3]/40 rounded-lg">
-                    <div className="w-8 h-8 rounded-full bg-[#4A382D] text-white flex items-center justify-center flex-shrink-0">
-                      <MapPin className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <span className="font-semibold text-[#4A382D] block">{t.location}</span>
-                      <span className="text-[#82756c]">{settings.address}</span>
-                    </div>
-                  </div>
-                )}
               </div>
 
               {/* Social Channels */}

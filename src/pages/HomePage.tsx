@@ -13,7 +13,9 @@ export const HomePage: React.FC = () => {
   const featuredProducts = products.filter((p) => p.isAvailable).slice(0, 4);
   const approvedReviews = reviews.filter((r) => r.isApproved).slice(0, 3);
 
-  const whatsappNumber = settings.whatsapp ? settings.whatsapp.replace(/[^0-9]/g, '') : '201017361763';
+  const whatsappNumber = settings.whatsapp
+    ? settings.whatsapp.replace(/[^0-9]/g, '').replace(/^0/, '20')
+    : '201505583399';
 
   const t = {
     heroTitle: isArabic ? 'أساسيات مصممة للمرأة العصرية' : 'Refined Essentials for the Modern Woman',

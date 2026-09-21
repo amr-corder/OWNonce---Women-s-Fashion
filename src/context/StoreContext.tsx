@@ -430,10 +430,19 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       doc(db, 'settings', 'store'),
       (docSnap) => {
         if (docSnap.exists()) {
+          const syncedSettings = {
+            ...DEFAULT_STORE_SETTINGS,
+            ...(docSnap.data() as StoreSettings),
+            phone: DEFAULT_STORE_SETTINGS.phone,
+            email: DEFAULT_STORE_SETTINGS.email,
+            whatsapp: DEFAULT_STORE_SETTINGS.whatsapp,
+            address: '',
+          };
           setSettings((prev) => ({
             ...prev,
-            ...(docSnap.data() as StoreSettings),
+            ...syncedSettings,
           }));
+          setDoc(doc(db, 'settings', 'store'), cleanData(syncedSettings)).catch(console.error);
         } else {
           setDoc(doc(db, 'settings', 'store'), cleanData(DEFAULT_STORE_SETTINGS)).catch(console.error);
         }
