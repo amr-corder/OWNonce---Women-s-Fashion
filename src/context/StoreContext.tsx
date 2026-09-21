@@ -142,7 +142,12 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [categories, setCategories] = useState<Category[]>(() => {
     try {
       const saved = localStorage.getItem('ownonce_categories');
-      return saved ? JSON.parse(saved) : DEFAULT_CATEGORIES;
+      if (saved) {
+        localStorage.setItem('ownonce_categories_initialized', 'true');
+        return JSON.parse(saved);
+      }
+      localStorage.setItem('ownonce_categories_initialized', 'false');
+      return DEFAULT_CATEGORIES;
     } catch {
       return DEFAULT_CATEGORIES;
     }
@@ -240,9 +245,14 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           });
           // Sort by creation time descending (newest first)
           loadedOrders.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+          localStorage.setItem('ownonce_orders_initialized', 'true');
           setOrders(loadedOrders);
         } else if (!isInitialCheckDone) {
           isInitialCheckDone = true;
+          if (localStorage.getItem('ownonce_orders_initialized') === 'true') {
+            setOrders([]);
+            return;
+          }
           // Seed demo orders if database has no orders yet
           const initialSeedOrders: Order[] = [
             {
@@ -328,6 +338,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           initialSeedOrders.forEach((ord) => {
             setDoc(doc(db, 'orders', ord.id), cleanData(ord)).catch(console.error);
           });
+          localStorage.setItem('ownonce_orders_initialized', 'true');
           setOrders(initialSeedOrders);
         } else {
           setOrders([]);
@@ -381,10 +392,15 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           setCategories(loadedCats);
         } else if (!isInitialCheckDone) {
           isInitialCheckDone = true;
-          DEFAULT_CATEGORIES.forEach((cat) => {
-            setDoc(doc(db, 'categories', cat.id), cleanData(cat)).catch(console.error);
-          });
-          setCategories(DEFAULT_CATEGORIES);
+          const hasInitializedCategories = localStorage.getItem('ownonce_categories_initialized') === 'true';
+          if (!hasInitializedCategories) {
+            DEFAULT_CATEGORIES.forEach((cat) => {
+              setDoc(doc(db, 'categories', cat.id), cleanData(cat)).catch(console.error);
+            });
+            setCategories(DEFAULT_CATEGORIES);
+          } else {
+            setCategories([]);
+          }
         }
       },
       (err) => {
@@ -407,12 +423,18 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             loadedReviews.push(docSnap.data() as Review);
           });
           loadedReviews.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+          localStorage.setItem('ownonce_reviews_initialized', 'true');
           setReviews(loadedReviews);
         } else if (!isInitialCheckDone) {
           isInitialCheckDone = true;
+          if (localStorage.getItem('ownonce_reviews_initialized') === 'true') {
+            setReviews([]);
+            return;
+          }
           INITIAL_REVIEWS.forEach((rev) => {
             setDoc(doc(db, 'reviews', rev.id), cleanData(rev)).catch(console.error);
           });
+          localStorage.setItem('ownonce_reviews_initialized', 'true');
           setReviews(INITIAL_REVIEWS);
         }
       },
@@ -748,6 +770,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const deleteOrder = (orderId: string) => {
     setOrders((prev) => prev.filter((o) => o.id !== orderId));
+    localStorage.setItem('ownonce_orders_initialized', 'true');
     try {
       deleteDoc(doc(db, 'orders', orderId)).catch(console.error);
     } catch (e) {
@@ -811,33 +834,6 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       console.error(e);
     }
 
-    // Ensure category exists in categories state & cloud
-    if (product.category && product.category.trim()) {
-      const cleanCategoryName = product.category.trim();
-      setCategories((prevCats) => {
-        const exists = prevCats.some(
-          (c) => c.name.trim().toLowerCase() === cleanCategoryName.toLowerCase()
-        );
-        if (!exists) {
-          const newCat: Category = {
-            id: `cat-${Date.now()}`,
-            name: cleanCategoryName,
-            slug: cleanCategoryName.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-            description: `Signature ${cleanCategoryName} designs crafted with meticulous attention to detail.`,
-            image:
-              product.images?.[0] ||
-              'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80',
-          };
-          try {
-            setDoc(doc(db, 'categories', newCat.id), cleanData(newCat)).catch(console.error);
-          } catch (e) {
-            console.error(e);
-          }
-          return [...prevCats, newCat];
-        }
-        return prevCats;
-      });
-    }
   };
 
   const updateProduct = (id: string, partial: Partial<Product>) => {
@@ -850,33 +846,6 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       console.error(e);
     }
 
-    // If category changed, ensure it exists in categories
-    if (partial.category && partial.category.trim()) {
-      const cleanCategoryName = partial.category.trim();
-      setCategories((prevCats) => {
-        const exists = prevCats.some(
-          (c) => c.name.trim().toLowerCase() === cleanCategoryName.toLowerCase()
-        );
-        if (!exists) {
-          const newCat: Category = {
-            id: `cat-${Date.now()}`,
-            name: cleanCategoryName,
-            slug: cleanCategoryName.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-            description: `Signature ${cleanCategoryName} designs crafted with meticulous attention to detail.`,
-            image:
-              partial.images?.[0] ||
-              'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80',
-          };
-          try {
-            setDoc(doc(db, 'categories', newCat.id), cleanData(newCat)).catch(console.error);
-          } catch (e) {
-            console.error(e);
-          }
-          return [...prevCats, newCat];
-        }
-        return prevCats;
-      });
-    }
   };
 
   const deleteProduct = (id: string) => {
@@ -922,6 +891,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const deleteCategory = (id: string) => {
     setCategories((prev) => prev.filter((c) => c.id !== id));
+    localStorage.setItem('ownonce_categories_initialized', 'true');
     try {
       deleteDoc(doc(db, 'categories', id)).catch(console.error);
     } catch (e) {
@@ -969,6 +939,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const deleteReview = (id: string) => {
     setReviews((prev) => prev.filter((r) => r.id !== id));
+    localStorage.setItem('ownonce_reviews_initialized', 'true');
     try {
       deleteDoc(doc(db, 'reviews', id)).catch(console.error);
     } catch (e) {
