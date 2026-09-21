@@ -259,8 +259,8 @@ export const INITIAL_REVIEWS: Review[] = [
 export const DEFAULT_STORE_SETTINGS: StoreSettings = {
   storeName: 'OWNonce',
   tagline: 'Refined Simplicity in Women\'s Essentials',
-  phone: '+20 150 558 3399',
-  whatsapp: '+20 150 558 3399',
+  phone: '01505583399',
+  whatsapp: '01505583399',
   email: 'ownonce.co@gmail.com',
   address: '',
   vodafoneCashNumber: '01022267922',
