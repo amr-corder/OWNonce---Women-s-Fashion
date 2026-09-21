@@ -44,10 +44,12 @@ export const Footer: React.FC = () => {
               {isArabic ? 'البساطة الراقية في مستلزمات المرأة الأساسية. مصممة للنساء اللواتي يقدّرن القطع الفاخرة، الراحة القصوى، والأناقة اليومية الدائمة.' : `${settings.tagline}. Designed for women who appreciate refined cuts, supreme comfort, and enduring everyday elegance.`}
             </p>
             <div className="pt-2 space-y-1.5 text-xs text-[#d4c3b9]">
-              <div className="flex items-center gap-2">
-                <MapPin className="w-3.5 h-3.5 text-[#B89578] flex-shrink-0" />
-                <span>{settings.address}</span>
-              </div>
+              {settings.address?.trim() && (
+                <div className="flex items-center gap-2">
+                  <MapPin className="w-3.5 h-3.5 text-[#B89578] flex-shrink-0" />
+                  <span>{settings.address}</span>
+                </div>
+              )}
               <div className="flex items-center gap-2">
                 <Mail className="w-3.5 h-3.5 text-[#B89578] flex-shrink-0" />
                 <span>{settings.email}</span>

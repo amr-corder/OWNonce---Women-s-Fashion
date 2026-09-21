@@ -262,7 +262,7 @@ export const DEFAULT_STORE_SETTINGS: StoreSettings = {
   phone: '+20 150 558 3399',
   whatsapp: '+20 150 558 3399',
   email: 'ownonce.co@gmail.com',
-  address: '14 Al-Thawra St, Heliopolis, Cairo, Egypt',
+  address: '',
   vodafoneCashNumber: '01022267922',
   instapayAccount: 'ownonce@instapay',
   instapayName: 'OWNonce Boutique',
