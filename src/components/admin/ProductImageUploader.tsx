@@ -35,19 +35,13 @@ const processImageFile = (file: File): Promise<string> => {
         return;
       }
 
-      // If file is small (< 800KB), return as is
-      if (file.size < 800 * 1024) {
-        resolve(result);
-        return;
-      }
-
-      // For larger images, resize gently via canvas to preserve high fidelity while keeping localStorage fast
+      // Always normalize images before storing them in Firestore/localStorage.
       const img = new Image();
       img.onload = () => {
         const canvas = document.createElement('canvas');
         let width = img.width;
         let height = img.height;
-        const maxDimension = 1400; // Crisp high-definition size
+        const maxDimension = 1200;
 
         if (width > maxDimension || height > maxDimension) {
           if (width > height) {
@@ -71,8 +65,7 @@ const processImageFile = (file: File): Promise<string> => {
         ctx.imageSmoothingQuality = 'high';
         ctx.drawImage(img, 0, 0, width, height);
 
-        const quality = file.type === 'image/png' ? 0.92 : 0.88;
-        const optimizedDataUrl = canvas.toDataURL(file.type || 'image/jpeg', quality);
+        const optimizedDataUrl = canvas.toDataURL('image/jpeg', 0.82);
         resolve(optimizedDataUrl);
       };
       img.onerror = () => resolve(result); // Fallback to raw dataUrl

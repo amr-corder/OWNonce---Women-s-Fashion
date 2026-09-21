@@ -78,7 +78,7 @@ interface StoreContextType {
   deleteOrderItem: (orderId: string, itemIndex: number) => void;
 
   // Product Admin Actions
-  addProduct: (product: Omit<Product, 'id' | 'createdAt'>) => void;
+  addProduct: (product: Omit<Product, 'id' | 'createdAt'>) => Promise<void>;
   updateProduct: (id: string, product: Partial<Product>) => void;
   deleteProduct: (id: string) => void;
   deleteAllProducts: () => Promise<void>;
@@ -821,17 +821,18 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   // Products CRUD
-  const addProduct = (product: Omit<Product, 'id' | 'createdAt'>) => {
+  const addProduct = async (product: Omit<Product, 'id' | 'createdAt'>) => {
     const newProd: Product = {
       ...product,
       id: `prod-${Date.now()}`,
       createdAt: Date.now(),
     };
-    setProducts((prev) => [newProd, ...prev]);
     try {
-      setDoc(doc(db, 'products', newProd.id), cleanData(newProd)).catch(console.error);
+      await setDoc(doc(db, 'products', newProd.id), cleanData(newProd));
+      setProducts((prev) => [newProd, ...prev.filter((product) => product.id !== newProd.id)]);
     } catch (e) {
       console.error(e);
+      throw e;
     }
 
   };

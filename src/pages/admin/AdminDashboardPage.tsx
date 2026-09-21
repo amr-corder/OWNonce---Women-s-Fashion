@@ -272,7 +272,7 @@ export const AdminDashboardPage: React.FC = () => {
   };
 
   // Save Product (Create or Update)
-  const handleSaveProduct = (e: React.FormEvent) => {
+  const handleSaveProduct = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const numOriginal =
@@ -310,24 +310,29 @@ export const AdminDashboardPage: React.FC = () => {
         isAvailable: prodAvailable,
       });
     } else {
-      addProduct({
-        name: prodName,
-        description: prodDesc,
-        price: numSale,
-        originalPrice: numOriginal,
-        weight: Number(prodWeight),
-        category: prodCategory,
-        stock: Number(prodStock),
-        images:
-          prodImages.length > 0
-            ? prodImages
-            : [
-                'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1200&q=80',
-              ],
-        colors: prodColors,
-        sizes: prodSizes,
-        isAvailable: prodAvailable,
-      });
+      try {
+        await addProduct({
+          name: prodName,
+          description: prodDesc,
+          price: numSale,
+          originalPrice: numOriginal,
+          weight: Number(prodWeight),
+          category: prodCategory,
+          stock: Number(prodStock),
+          images:
+            prodImages.length > 0
+              ? prodImages
+              : [
+                  'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1200&q=80',
+                ],
+          colors: prodColors,
+          sizes: prodSizes,
+          isAvailable: prodAvailable,
+        });
+      } catch {
+        setPriceValidationError('Product could not be saved. Please use smaller images and try again.');
+        return;
+      }
     }
     setIsProductModalOpen(false);
   };
