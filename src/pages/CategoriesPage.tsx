@@ -73,15 +73,6 @@ export const CategoriesPage: React.FC = () => {
                         <span className="inline-block text-[10px] uppercase tracking-wider text-[#77553b] font-semibold mt-4">
                           {categoryProducts.length} {isArabic ? 'منتج' : categoryProducts.length === 1 ? 'Product' : 'Products'}
                         </span>
-                        {category.types && category.types.length > 0 && (
-                          <div className="flex flex-wrap gap-1.5 mt-3">
-                            {category.types.map((type) => (
-                              <span key={type} className="px-2 py-1 bg-[#F5E6D3] text-[#77553b] text-[10px] rounded">
-                                {type}
-                              </span>
-                            ))}
-                          </div>
-                        )}
                       </div>
                       <ArrowRight className="w-5 h-5 shrink-0 text-[#B89578] transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1" />
                     </div>
