@@ -119,8 +119,6 @@ export const AdminDashboardPage: React.FC = () => {
   const [prodCategory, setProdCategory] = useState(
     'Basic Round Neck – Short Sleeve'
   );
-  const [isCustomCategoryMode, setIsCustomCategoryMode] = useState(false);
-  const [customCategoryInput, setCustomCategoryInput] = useState('');
   const [prodStock, setProdStock] = useState(50);
   const [prodImages, setProdImages] = useState<string[]>([]);
   const [prodColors, setProdColors] = useState<ProductColor[]>(ADMIN_DEFAULT_COLORS);
@@ -243,8 +241,6 @@ export const AdminDashboardPage: React.FC = () => {
     setPriceValidationError(null);
     setProdWeight(0.35);
     setProdCategory(categories[0]?.name || 'Basic Round Neck – Short Sleeve');
-    setIsCustomCategoryMode(false);
-    setCustomCategoryInput('');
     setProdStock(40);
     setProdImages([]);
     setProdColors(ADMIN_DEFAULT_COLORS);
@@ -267,8 +263,6 @@ export const AdminDashboardPage: React.FC = () => {
     setPriceValidationError(null);
     setProdWeight(prod.weight);
     setProdCategory(prod.category);
-    setIsCustomCategoryMode(false);
-    setCustomCategoryInput('');
     setProdStock(prod.stock);
     setProdImages(prod.images || []);
     setProdColors(prod.colors);
@@ -296,11 +290,6 @@ export const AdminDashboardPage: React.FC = () => {
 
     setPriceValidationError(null);
 
-    const finalCategory =
-      isCustomCategoryMode && customCategoryInput.trim()
-        ? customCategoryInput.trim()
-        : prodCategory;
-
     if (editingProductId) {
       updateProduct(editingProductId, {
         name: prodName,
@@ -308,7 +297,7 @@ export const AdminDashboardPage: React.FC = () => {
         price: numSale,
         originalPrice: numOriginal,
         weight: Number(prodWeight),
-        category: finalCategory,
+        category: prodCategory,
         stock: Number(prodStock),
         images:
           prodImages.length > 0
@@ -327,7 +316,7 @@ export const AdminDashboardPage: React.FC = () => {
         price: numSale,
         originalPrice: numOriginal,
         weight: Number(prodWeight),
-        category: finalCategory,
+        category: prodCategory,
         stock: Number(prodStock),
         images:
           prodImages.length > 0
@@ -1346,13 +1335,6 @@ export const AdminDashboardPage: React.FC = () => {
               </div>
               {categories.map((category) => (
                 <div key={category.id} className="flex items-center gap-3 p-3 bg-[#F5E6D3]/30 rounded-lg border border-[#d4c3b9]">
-                  {category.image ? (
-                    <img src={category.image} alt="" className="w-14 h-14 rounded object-cover shrink-0" />
-                  ) : (
-                    <div className="w-14 h-14 rounded bg-[#B89578] text-[#FFFDF9] flex items-center justify-center text-center text-[10px] font-semibold p-1 shrink-0">
-                      {category.name}
-                    </div>
-                  )}
                   <div className="min-w-0 flex-1">
                     <h3 className="font-semibold text-sm truncate">{category.name}</h3>
                     <p className="text-[11px] text-[#82756c] line-clamp-2">{category.description || 'No description'}</p>
@@ -1662,52 +1644,18 @@ export const AdminDashboardPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <div className="flex items-center justify-between mb-1">
-                    <label className="font-semibold block">Category Style *</label>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setIsCustomCategoryMode(!isCustomCategoryMode);
-                        if (!isCustomCategoryMode) {
-                          setCustomCategoryInput('');
-                        }
-                      }}
-                      className="text-[11px] text-[#77553b] hover:text-[#4A382D] underline font-medium cursor-pointer"
-                    >
-                      {isCustomCategoryMode ? '← Choose Existing' : '+ New Category'}
-                    </button>
-                  </div>
-
-                  {isCustomCategoryMode ? (
-                    <input
-                      type="text"
-                      required
-                      value={customCategoryInput}
-                      onChange={(e) => setCustomCategoryInput(e.target.value)}
-                      placeholder="Type new category name..."
-                      className="w-full p-2.5 bg-[#FFFDF9] border-2 border-[#77553b] rounded focus:outline-none"
-                    />
-                  ) : (
-                    <select
-                      value={prodCategory}
-                      onChange={(e) => {
-                        if (e.target.value === '__NEW__') {
-                          setIsCustomCategoryMode(true);
-                          setCustomCategoryInput('');
-                        } else {
-                          setProdCategory(e.target.value);
-                        }
-                      }}
-                      className="w-full p-2.5 bg-[#F5E6D3]/30 border border-[#d4c3b9] rounded cursor-pointer"
-                    >
-                      {categories.map((c) => (
-                        <option key={c.id} value={c.name}>
-                          {c.name}
-                        </option>
-                      ))}
-                      <option value="__NEW__">+ Add Custom Category...</option>
-                    </select>
-                  )}
+                  <label className="font-semibold block mb-1">Category Style *</label>
+                  <select
+                    value={prodCategory}
+                    onChange={(e) => setProdCategory(e.target.value)}
+                    className="w-full p-2.5 bg-[#F5E6D3]/30 border border-[#d4c3b9] rounded cursor-pointer"
+                  >
+                    {categories.map((c) => (
+                      <option key={c.id} value={c.name}>
+                        {c.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
 
